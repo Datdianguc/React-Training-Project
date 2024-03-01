@@ -67,3 +67,8 @@ body {
     padding-top: 10%;
 }
 
+.social-icons{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
