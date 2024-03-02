@@ -1,12 +1,17 @@
-.information-bar{
-    border-bottom: 1px solid #444;
-    height: 60px;
-    position: relative;
-}
-
 * {
     box-sizing: border-box;
-  }
+}
+
+.page-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.header {
+    display: block;
+    padding: 0px 16px;
+}
 
 body {
     color: #888;
@@ -16,68 +21,165 @@ body {
     line-height: 1.8;
 }
 
-.main-menu{
-    height: 60px;
+.header-container {
+    width: 1140px;
+    color: #888;
+    font: 15px "Open Sans", sans-serif;
+    margin: 0px 170.4px;
+    padding: 0px 15px;
 }
 
-.navbar{
-    padding: 1px 10px;
-}
-
-.main-menu-container{
-    height: 60px;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-items: center;
-    padding-left: 20px;
-}
-
-.supported-item-container{
+.header-container-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-direction: row;
-    height: 60px;
-    padding-left: 800px;
 }
 
-.firstlook{
-    display: block;
+.Sneaky-icon {
+    margin: 15px 0px;
 }
 
-.firstlook-wrapper{
+.menu {
+    display: flex;
+    list-style-type: none;
+    margin: 15px 0px;
+}
+
+
+.header-container-content .menu > li > .secondary-button {
+    color: #2f2d4e;
+    font: 14px "Open Sans", sans-serif;
+    text-decoration: none;
+    padding: 11px 20px;
+}
+
+.header-container-content .menu > li > .primary-button {
+    color: #e22104;
+    font: 14px "Open Sans", sans-serif;
+    text-decoration: none;
+    padding: 11px 20px;
+}
+
+.hero-banner {
     position: relative;
+    display: flex;
 }
 
-.firstlook-left{
-    text-align: left;
-    margin-top: 0;
-    margin-bottom: 0;
-    width: 50%;
-    float: left;
-    padding-left: 7%;
-    padding-top: 10%;
-}
-
-.firstlook-right{
-    width: 50%;
-    float: right;
-    padding-right: 7%;
-    padding-top: 10%;
-}
-
-.social-icons{
+.social {
+    position: absolute;
+    left: 75px;
+    top: 40%;
+    list-style-type: none;
+    height: 120px;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
-.fa{
+.hero-banner .social > li {
+    width: 20px;
+    height: 20px;
+}
+
+.hero-banner .social > li > a {
+    font-size: 20px;
+    color: #2f2d4e;
+    text-decoration: none;
+}
+
+.hero-left {
+    width: 50%;
     padding: 10px;
 }
 
-h1,h2,h3,h4,h5{
+.hero-right {
+    width: 50%;
+    float: right;
+}
+
+.hero-title {
+    font-size: 60px;
     font-family: "Josefin Sans", sans-serif;
+    margin-bottom: 50px;
+    line-height: 1.2;
     color: #2f2d4e;
+}
+
+.hero-button {
+    display: flex;
+    flex-wrap: wrap !important;
+}
+
+.red-button {
+    display: inline-block;
+    background-color: #e22104;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 30px;
+    padding: 9px 25px;
+    text-transform: capitalize;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    border: none;
+}
+
+.white-button {
+    margin-left: 35px;
+    align-items: center;
+    margin-left: 15px;
+    padding: 12px 5px 12px 45px !important;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2f2d4e;
+    border: none;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.play-button {
+    padding-right: 30px;
+}
+
+.hero-info {
+    display: flex;
+    list-style-type: none;
+    padding: 140px 0px 0px;
+    justify-content: space-between;
+}
+
+.title-featured {
+    width: 75%;
+    height: 75%;
+}
+
+.hero-left .hero-info > li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-left .hero-info > li > h4 {
+    color: #2f2d4e;
+    font: 14px "Josefin Sans", sans-serif;
+    margin: 15px 0px 8px;
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 1330px) {
+    .header-container {
+        width: 100%;
+        margin: 0px 40px;
+        padding: 0px 15px;
+    }
+}
+
+@media only screen and (max-width: 1528px) {
+    .hero-left {
+        padding-left: 18%;
+        padding-top: 10%;
+    }
 }
