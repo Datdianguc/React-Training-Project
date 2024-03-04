@@ -254,8 +254,69 @@ body {
     height: 50px;
 }
 
+
 .about-us-text > p {
     margin: 30px 0;
+}
+
+.featured-food .container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.section-intro {
+    max-width: 460px;
+    margin-bottom: 75px;
+}
+
+.specialties {
+    background-color: #fff8f7;
+}
+
+.specialties-container {
+    max-width: 1140px;
+    display: flex;
+    gap: 2.5%;
+}
+
+.specialties-body {
+    padding: 30px;
+}
+
+.specialties-body > h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    font-family: "Josefin Sans", sans-serif;
+    color: #2f2d4e;
+    line-height: 1.2;
+}
+
+.specialties-body > p {
+    margin: 10px 0;
+}
+
+.star-and-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ul.rating-star {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    color: yellow;
+}
+
+h3.price-tag {
+    font-size: 24px;
+    font-weight: 600;
+    color: red;
+    font-family: "Open Sans", sans-serif;
 }
 
 @media only screen and (max-width: 1330px) {
@@ -288,5 +349,35 @@ body {
 @media only screen and (max-width: 1330px) {
     .about-us .container {
         max-width: 960px;
+    } 
+}
+
+@media only screen and (max-width: 1528px) {
+    .featured-food {
+        margin-bottom: 100px;
+    } 
+}
+
+@media only screen and (max-width: 1330px) {
+    .featured-food {
+        margin-bottom: 60px;
+    } 
+}
+
+@media only screen and (max-width: 1528px) {
+    .featured-food .container {
+        max-width: 1140px;
+    } 
+}
+
+@media only screen and (max-width: 1330px) {
+    .featured-food .container {
+        max-width: 960px;
+    } 
+}
+
+@media only screen and (max-width: 1330px) {
+    .section-intro {
+        margin-bottom: 35px;
     } 
 }
