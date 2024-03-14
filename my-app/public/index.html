@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="A TodoMVC written in React" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>TodoMVC: React</title>
+    <script defer="defer" src="/my-app/src/App.js"></script>
+    <link rel="stylesheet" href="/my-app/src/App.css" />
+  </head>
+  <body>
+    <div class="page-container">
+      <section class="todoapp" id="root">
+        <header class="header">
+          <h1>todos</h1>
+          <div class="input-container">
+            <input
+              class="main-input"
+              id="todo-input"
+              type="text"
+              placeholder="What needs to be done?"
+            />
+          </div>
+        </header>
+        <main class="main-list">
+          <ul class="todo-list"></ul>
+        </main>
+      </section>
+      <footer class="info">
+        <p>Double-click to edit a todo</p>
+        <p>Created by the TodoMVC Team</p>
+        <p>"Part of " <a href="http://todomvc.com">TodoMVC</a></p>
+      </footer>
+    </div>
+  </body>
+</html>
