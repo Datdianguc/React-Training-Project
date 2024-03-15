@@ -10,18 +10,26 @@ export default class Workspace extends React.Component {
     event.preventDefault();
     const NewItem = this.state.text;
     this.setState({
-        count: this.state.count +1,
-        list: [...this.state.list, NewItem] 
-    }) 
-  } 
+      count: this.state.count + 1,
+      list: [...this.state.list, NewItem],
+    });
+    console.log(this.state.list);
+  };
   render() {
     return (
       <div className="typing">
-        <input
-          className="pleasetype"
-          placeholder="What need to be done?"
-          onChange={this.handleChange}
-        ></input>
+        <form onSubmit={this.handleSubmit}>
+          <input
+            className="pleasetype"
+            placeholder="What need to be done?"
+            onChange={this.handleChange}
+          ></input>
+        </form>
+        <div className="output">
+          {this.state.list.map((n) => {
+            return n;
+          })}
+        </div>
       </div>
     );
   }
