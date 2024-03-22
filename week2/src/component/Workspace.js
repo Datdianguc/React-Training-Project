@@ -4,6 +4,7 @@ export default class Workspace extends React.Component {
   state = {
     count: 0,
     text: "",
+    filter: "all",
     list: [],
   };
 
@@ -34,34 +35,85 @@ export default class Workspace extends React.Component {
     }));
   };
 
+  handleDelete = (id) => {
+    this.setState((prevState) => ({
+      list: prevState.list.filter((item) => item.id !== id),
+      count: this.state.count - 1,
+    }));
+  };
+
+  handleFilterChange = (filter) => {
+    this.setState({ filter });
+  };
+
+  handleClearCompleted = () => {
+    this.setState((prevState) => ({
+      list: prevState.list.filter((item) => !item.checked),
+      count: prevState.list.filter((item) => !item.checked).length
+    }));
+  };
+
   render() {
+    const { list, filter } = this.state;
+    let filteredList = list;
+    if (filter === "active") {
+      filteredList = list.filter((item) => !item.checked);
+    } else if (filter === "completed") {
+      filteredList = list.filter((item) => item.checked);
+    }
     return (
-      <div className="typing">
+      <div className="workspace">
         <form onSubmit={this.handleSubmit}>
           <input
             value={this.state.text}
             className="pleasetype"
-            placeholder="What need to be done?"
+            placeholder="What needs to be done?"
             onChange={this.handleChange}
           />
         </form>
-        <div className="output">
-          {this.state.list.map((item) => (
-            <div key={item.id}>
+        <div className="view">
+          {filteredList.map((item) => (
+            <div className="ul-todo-list" key={item.id}>
               <input
+                className="toggle"
                 type="checkbox"
                 checked={item.checked}
                 onChange={() => this.handleCheckboxChange(item.id)}
               />
               <label
+                className="todo-item-label"
                 style={{
                   textDecoration: item.checked ? "line-through" : "none",
                 }}
               >
                 {item.name}
               </label>
+              <div className="erase">
+                <button onClick={() => this.handleDelete(item.id)}>X</button>
+              </div>
             </div>
           ))}
+          {this.state.count ? (
+            <div className="menu">
+              {this.state.count} items left!
+              <ul>
+                <li>
+                  <button onClick={() => this.handleFilterChange("all")}>All</button>
+                </li>
+                <li>
+                <button onClick={() => this.handleFilterChange("active")}>Active</button>
+                </li>
+                <li>
+                <button onClick={() => this.handleFilterChange("completed")}>Completed</button>
+                </li>
+              </ul>
+              <div>
+                <button onClick={this.handleClearCompleted}>Clear Completed</button>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     );

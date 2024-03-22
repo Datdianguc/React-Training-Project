@@ -1,4 +1,49 @@
-
-.typing .pleasetype {
-    width: 100%;
+.workspace {
+  background: rgba(0, 0, 0, 0.003);
+  border: none;
+  box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
+  padding: 16px 16px 16px 60px;
 }
+
+.workspace .pleasetype {
+  width: 100%;
+  border: none;
+  font-size: 24px;
+  background: rgba(0, 0, 0, 0.003);
+}
+
+.ul-todo-list {
+    display: flex;
+}
+
+.view {
+    font-size: 24px;
+    margin-bottom: 50px;
+}
+
+.toggle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: relative;
+    background: #fff;
+    border: 1px solid black;
+}
+
+.todo-item-label {
+    margin: auto;
+}
+
+.erase {
+    display: flex;
+    margin: 0;
+    padding-left: 100px;
+}
+
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+}
+
