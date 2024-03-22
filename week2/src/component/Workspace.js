@@ -1,6 +1,7 @@
 import React from "react";
-import Button from "./filterbutton";
 import "../totalcss/Workspace.css";
+import FilterButton from "./filterbutton";
+import ToggleAll from "./ToggleAll";
 export default class Workspace extends React.Component {
   state = {
     count: 0,
@@ -54,6 +55,15 @@ export default class Workspace extends React.Component {
     }));
   };
 
+  handleToggleAll = () => {
+    this.setState((prevState) => ({
+      list: prevState.list.map((item) => ({
+        ...item,
+        checked: !prevState.list.every((item) => item.checked)
+      }))
+    }));
+  };
+  
   render() {
     const { list, filter } = this.state;
     let filteredList = list;
@@ -64,6 +74,9 @@ export default class Workspace extends React.Component {
     }
     return (
       <div className="workspace">
+        <div className="toggle-all-container">
+          <ToggleAll name="^" onClick={() => this.handleToggleAll()}/>
+        </div>
         <form onSubmit={this.handleSubmit}>
           <input
             value={this.state.text}
@@ -99,19 +112,19 @@ export default class Workspace extends React.Component {
               <div className="counter">{this.state.count} items left!</div>
               <ul>
                 <li>
-                  <Button
+                  <FilterButton
                     name="All"
                     onClick={() => this.handleFilterChange("all")}
                   />
                 </li>
                 <li>
-                  <Button
+                  <FilterButton
                     name="Active"
                     onClick={() => this.handleFilterChange("active")}
                   />
                 </li>
                 <li>
-                  <Button
+                  <FilterButton
                     name="Completed"
                     onClick={() => this.handleFilterChange("completed")}
                   />
