@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "./filterbutton";
 import "../totalcss/Workspace.css";
 export default class Workspace extends React.Component {
   state = {
@@ -49,7 +50,7 @@ export default class Workspace extends React.Component {
   handleClearCompleted = () => {
     this.setState((prevState) => ({
       list: prevState.list.filter((item) => !item.checked),
-      count: prevState.list.filter((item) => !item.checked).length
+      count: prevState.list.filter((item) => !item.checked).length,
     }));
   };
 
@@ -95,20 +96,31 @@ export default class Workspace extends React.Component {
           ))}
           {this.state.count ? (
             <div className="menu">
-              {this.state.count} items left!
+              <div className="counter">{this.state.count} items left!</div>
               <ul>
                 <li>
-                  <button onClick={() => this.handleFilterChange("all")}>All</button>
+                  <Button
+                    name="All"
+                    onClick={() => this.handleFilterChange("all")}
+                  />
                 </li>
                 <li>
-                <button onClick={() => this.handleFilterChange("active")}>Active</button>
+                  <Button
+                    name="Active"
+                    onClick={() => this.handleFilterChange("active")}
+                  />
                 </li>
                 <li>
-                <button onClick={() => this.handleFilterChange("completed")}>Completed</button>
+                  <Button
+                    name="Completed"
+                    onClick={() => this.handleFilterChange("completed")}
+                  />
                 </li>
               </ul>
-              <div>
-                <button onClick={this.handleClearCompleted}>Clear Completed</button>
+              <div className="clearCompleted">
+                <button onClick={this.handleClearCompleted}>
+                  Clear Completed
+                </button>
               </div>
             </div>
           ) : (

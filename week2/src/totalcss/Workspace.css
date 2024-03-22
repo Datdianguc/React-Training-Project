@@ -23,7 +23,6 @@
 
 .toggle {
     width: 20px;
-    height: 20px;
     border-radius: 50%;
     position: relative;
     background: #fff;
@@ -40,6 +39,11 @@
     padding-left: 100px;
 }
 
+.erase > button {
+    background: #fff;
+    border: 1px solid transparent;
+    margin: 3px;
+}
 
 .footer {
     display: flex;
@@ -47,3 +51,32 @@
     position: absolute;
 }
 
+.counter {
+    font-size: 15px;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+}
+
+.menu > ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+}
+
+.menu > ul > li > button {
+    background: #fff;
+    border: 1px solid transparent;
+    margin: 3px;
+}
+
+.clearCompleted > button {
+    background: #fff;
+    border: 1px solid transparent;
+    margin: 3px;
+}
