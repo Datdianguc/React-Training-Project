@@ -69,12 +69,6 @@
     padding: 0px;
 }
 
-.menu > ul > li > button {
-    background: #fff;
-    border: 1px solid transparent;
-    margin: 3px;
-}
-
 .clearCompleted > button {
     background: #fff;
     border: 1px solid transparent;
