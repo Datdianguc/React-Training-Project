@@ -1,7 +1,9 @@
 import React from "react";
 import "../totalcss/Workspace.css";
-import FilterButton from "./filterbutton";
+
 import ToggleAll from "./ToggleAll";
+import View from "./View";
+import Input from "./Input";
 export default class Workspace extends React.Component {
   state = {
     count: 0,
@@ -59,11 +61,11 @@ export default class Workspace extends React.Component {
     this.setState((prevState) => ({
       list: prevState.list.map((item) => ({
         ...item,
-        checked: !prevState.list.every((item) => item.checked)
-      }))
+        checked: !prevState.list.every((item) => item.checked),
+      })),
     }));
   };
-  
+
   render() {
     const { list, filter } = this.state;
     let filteredList = list;
@@ -74,72 +76,25 @@ export default class Workspace extends React.Component {
     }
     return (
       <div className="workspace">
+        <Input
+          onSubmit={this.handleSubmit}
+          value={this.state.text}
+          className="pleasetype"
+          placeholder="What needs to be done?"
+          onChange={this.handleChange}
+        />
         <div className="toggle-all-container">
-          <ToggleAll name="^" onClick={() => this.handleToggleAll()}/>
+          <ToggleAll name="^" onClick={() => this.handleToggleAll()} />
         </div>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            value={this.state.text}
-            className="pleasetype"
-            placeholder="What needs to be done?"
-            onChange={this.handleChange}
-          />
-        </form>
-        <div className="view">
-          {filteredList.map((item) => (
-            <div className="ul-todo-list" key={item.id}>
-              <input
-                className="toggle"
-                type="checkbox"
-                checked={item.checked}
-                onChange={() => this.handleCheckboxChange(item.id)}
-              />
-              <label
-                className="todo-item-label"
-                style={{
-                  textDecoration: item.checked ? "line-through" : "none",
-                }}
-              >
-                {item.name}
-              </label>
-              <div className="erase">
-                <button onClick={() => this.handleDelete(item.id)}>X</button>
-              </div>
-            </div>
-          ))}
-          {this.state.count ? (
-            <div className="menu">
-              <div className="counter">{this.state.count} items left!</div>
-              <ul>
-                <li>
-                  <FilterButton
-                    name="All"
-                    onClick={() => this.handleFilterChange("all")}
-                  />
-                </li>
-                <li>
-                  <FilterButton
-                    name="Active"
-                    onClick={() => this.handleFilterChange("active")}
-                  />
-                </li>
-                <li>
-                  <FilterButton
-                    name="Completed"
-                    onClick={() => this.handleFilterChange("completed")}
-                  />
-                </li>
-              </ul>
-              <div className="clearCompleted">
-                <button onClick={this.handleClearCompleted}>
-                  Clear Completed
-                </button>
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
+        <View
+          list={filteredList}
+          filter={this.state.filter}
+          count={this.state.count}
+          onChange={this.handleCheckboxChange}
+          onClick={this.handleDelete}
+          onClear={this.handleClearCompleted}
+          onFilter={this.handleFilterChange}
+        />
       </div>
     );
   }

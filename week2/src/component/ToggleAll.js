@@ -5,6 +5,6 @@ export default class ToggleAll extends React.Component {
     super(props);
   }
   render() {
-    return <button onClick={this.props.onClick}>{this.props.name}</button>
+    return <button onClick={this.props.onClick}>{this.props.name}</button>;
   }
 }

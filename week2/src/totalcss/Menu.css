@@ -1,0 +1,38 @@
+.counter {
+  font-size: 15px;
+  padding: 15px;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+}
+
+.menu > ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 0px;
+}
+
+.menu > ul > li {
+  padding: 5px;
+}
+
+.menu > ul > li > button {
+  background: #fff;
+  border: 1px solid transparent;
+  margin: 3px;
+}
+
+.clearCompleted {
+    padding: 5px;
+}
+
+.clearCompleted > button {
+  background: #fff;
+  border: 1px solid transparent;
+  margin: 3px;
+}
