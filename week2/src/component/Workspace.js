@@ -10,6 +10,8 @@ export default class Workspace extends React.Component {
     text: "",
     filter: "all",
     list: [],
+    currentPage: 1,
+    recordsPerPage: 5,
   };
 
   handleChange = (event) => {
@@ -66,6 +68,13 @@ export default class Workspace extends React.Component {
     }));
   };
 
+  goToNextPage = () => {
+    if (currentPage !== nPages) setCurrentPage(currentPage + 1);
+  };
+  goToPrevPage = () => {
+    if (currentPage !== 1) setCurrentPage(currentPage - 1);
+  };
+
   render() {
     const { list, filter } = this.state;
     let filteredList = list;
@@ -74,6 +83,18 @@ export default class Workspace extends React.Component {
     } else if (filter === "completed") {
       filteredList = list.filter((item) => item.checked);
     }
+
+    const indexOfLastRecord = currentPage * recordsPerPage;
+    const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+    const currentRecords = this.state.list.slice(
+      indexOfFirstRecord,
+      indexOfLastRecord
+    );
+    const nPages = Math.ceil(this.state.list.length / recordsPerPage);
+
+    const pageNumbers = [...this.state.list(nPages + 1).key()].slice(1);
+
+
     return (
       <div className="workspace">
         <Input
@@ -94,6 +115,13 @@ export default class Workspace extends React.Component {
           onClick={this.handleDelete}
           onClear={this.handleClearCompleted}
           onFilter={this.handleFilterChange}
+        />
+        <Records data={currentRecords} />
+        <Pagination
+          count={this.state.count}
+          nPages={nPages}
+          currentPage={currentPage}
+          recordsPerPage={recordsPerPage}
         />
       </div>
     );
