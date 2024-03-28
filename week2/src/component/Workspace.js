@@ -1,6 +1,6 @@
 import React from "react";
 import "../totalcss/Workspace.css";
-
+import Pagination from "./Pagination";
 import ToggleAll from "./ToggleAll";
 import View from "./View";
 import Input from "./Input";
@@ -68,15 +68,23 @@ export default class Workspace extends React.Component {
     }));
   };
 
+  handlePageChange = (currentPage) => {
+    this.setState({
+      currentPage: currentPage,
+    })
+  }
   goToNextPage = () => {
-    if (currentPage !== nPages) setCurrentPage(currentPage + 1);
+    const { currentPage, recordsPerPage, list } = this.state;
+    const nPages = Math.ceil(list.length / recordsPerPage);
+    if (currentPage !== nPages) this.setState({ currentPage: currentPage + 1 });
   };
   goToPrevPage = () => {
-    if (currentPage !== 1) setCurrentPage(currentPage - 1);
+    const { currentPage } = this.state;
+    if (currentPage !== 1) this.setState({ currentPage: currentPage - 1 });
   };
 
   render() {
-    const { list, filter } = this.state;
+    const { list, filter, currentPage, recordsPerPage } = this.state;
     let filteredList = list;
     if (filter === "active") {
       filteredList = list.filter((item) => !item.checked);
@@ -84,19 +92,16 @@ export default class Workspace extends React.Component {
       filteredList = list.filter((item) => item.checked);
     }
 
-    const indexOfLastRecord = currentPage * recordsPerPage;
-    const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-    const currentRecords = this.state.list.slice(
-      indexOfFirstRecord,
-      indexOfLastRecord
-    );
-    const nPages = Math.ceil(this.state.list.length / recordsPerPage);
+    const nPages = Math.ceil(list.length / recordsPerPage);
 
-    const pageNumbers = [...this.state.list(nPages + 1).key()].slice(1);
-
+    const pageNumbers = [...Array(nPages + 1).keys()].slice(1);
+        //ouput = [1, 2, 3, ... ,8 , 9, 10]
 
     return (
       <div className="workspace">
+        <button onClick={() => console.log(this.state.currentPage)}>
+          "View Current Page"
+        </button>
         <Input
           onSubmit={this.handleSubmit}
           value={this.state.text}
@@ -115,13 +120,15 @@ export default class Workspace extends React.Component {
           onClick={this.handleDelete}
           onClear={this.handleClearCompleted}
           onFilter={this.handleFilterChange}
+          pgIndex={this.state.currentPage}
         />
-        <Records data={currentRecords} />
         <Pagination
-          count={this.state.count}
-          nPages={nPages}
+          pageNumbers = {pageNumbers}
+          goToNextPage={this.goToNextPage}
+          goToPrevPage={this.goToPrevPage}
           currentPage={currentPage}
-          recordsPerPage={recordsPerPage}
+          handlePageChange={this.handlePageChange}
+          // pageNumbers={Array.from({ length: nPages }, (_, i) => i + 1)}
         />
       </div>
     );

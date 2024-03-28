@@ -6,12 +6,13 @@ export default class Pagination extends React.Component{
     }
 
     render(){
+        const { currentPage, pageNumbers, goToNextPage, goToPrevPage } = this.props;
         return(
             <nav>
             <ul className='pagination justify-content-center'>
             <li className="page-item">
                 <a className="page-link" 
-                    onClick={this.props.goToPrevPage} 
+                    onClick={goToPrevPage} 
                     href='#'>
                     
                     Previous
@@ -21,7 +22,7 @@ export default class Pagination extends React.Component{
                 <li key={pgNumber} 
                     className= {`page-item ${currentPage == pgNumber ? 'active' : ''} `} >
 
-                    <a onClick={() => setCurrentPage(pgNumber)}  
+                    <a onClick={() => this.props.handlePageChange(pgNumber)}  
                         className='page-link' 
                         href='#'>
                         
@@ -31,7 +32,7 @@ export default class Pagination extends React.Component{
             ))}
             <li className="page-item">
                 <a className="page-link" 
-                    onClick={this.props.goToNextPage}
+                    onClick={goToNextPage}
                     href='#'>
                     
                     Next
