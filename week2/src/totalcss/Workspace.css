@@ -13,15 +13,13 @@
 }
 
 .toggle-all-container {
-    position: absolute;
-    top: 18px;
-    left: 20px;
+  position: absolute;
+  top: 18px;
+  left: 20px;
 }
 
 .toggle-all-container > button {
-    background-color: #fff;
-    border: none;
-    font-size: 24px;
+  background-color: #fff;
+  border: none;
+  font-size: 24px;
 }
-
-

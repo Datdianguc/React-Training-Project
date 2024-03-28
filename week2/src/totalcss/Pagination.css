@@ -1,0 +1,18 @@
+.pagination-container {
+  display: flex;
+  justify-content: space-evenly;
+  list-style-type: none;
+  margin: 0;
+  padding: 0 0 15px 0;
+}
+
+.pagination-container .page-item .page-link {
+  text-decoration: none;
+  font-size: 15px;
+  padding: 3px 7px;
+  color: #484848;
+}
+
+.page-link:hover {
+  outline: 1px solid #ce4646;
+}

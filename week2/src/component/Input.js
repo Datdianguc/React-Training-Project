@@ -1,6 +1,6 @@
 import React from "react";
 import "../totalcss/Input.css"
-export default class Input extends React.Component {
+class Input extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -12,8 +12,15 @@ export default class Input extends React.Component {
           className={this.props.className}
           placeholder={this.props.placeholder}
           onChange={this.props.onChange}
+          ref={this.props.forwardedRef}
         />
       </form>
     );
   }
 }
+
+const ForwardedInput = React.forwardRef((props, ref) => (
+  <Input {...props} forwardedRef={ref} />
+));
+
+export default ForwardedInput;

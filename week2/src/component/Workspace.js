@@ -3,8 +3,12 @@ import "../totalcss/Workspace.css";
 import Pagination from "./Pagination";
 import ToggleAll from "./ToggleAll";
 import View from "./View";
-import Input from "./Input";
+import ForwardedInput from "./Input";
 export default class Workspace extends React.Component {
+  constructor(){
+    super();
+    this.inputRef = React.createRef();
+  }
   state = {
     count: 0,
     text: "",
@@ -12,6 +16,8 @@ export default class Workspace extends React.Component {
     list: [],
     currentPage: 1,
     recordsPerPage: 5,
+    editingId: null,
+    editText: "",
   };
 
   handleChange = (event) => {
@@ -71,8 +77,8 @@ export default class Workspace extends React.Component {
   handlePageChange = (currentPage) => {
     this.setState({
       currentPage: currentPage,
-    })
-  }
+    });
+  };
   goToNextPage = () => {
     const { currentPage, recordsPerPage, list } = this.state;
     const nPages = Math.ceil(list.length / recordsPerPage);
@@ -81,6 +87,23 @@ export default class Workspace extends React.Component {
   goToPrevPage = () => {
     const { currentPage } = this.state;
     if (currentPage !== 1) this.setState({ currentPage: currentPage - 1 });
+  };
+
+  handleEdit = (id, name) => {
+    this.setState({ editingId: id, editText: name });
+  };
+
+  handleEditChange = (event) => {
+    this.setState({ editText: event.target.value });
+    this.inputRef.current.focus();
+  };
+
+  handleEditSubmit = (id) => {
+    const { list, editText } = this.state;
+    const updatedList = list.map((item) =>
+      item.id === id ? { ...item, name: editText } : item
+    );
+    this.setState({ list: updatedList, editingId: null, editText: "" });
   };
 
   render() {
@@ -95,19 +118,17 @@ export default class Workspace extends React.Component {
     const nPages = Math.ceil(list.length / recordsPerPage);
 
     const pageNumbers = [...Array(nPages + 1).keys()].slice(1);
-        //ouput = [1, 2, 3, ... ,8 , 9, 10]
+    //ouput = [1, 2, 3, ... ,8 , 9, 10]
 
     return (
       <div className="workspace">
-        <button onClick={() => console.log(this.state.currentPage)}>
-          "View Current Page"
-        </button>
-        <Input
+        <ForwardedInput
           onSubmit={this.handleSubmit}
           value={this.state.text}
           className="pleasetype"
           placeholder="What needs to be done?"
           onChange={this.handleChange}
+          ref={this.inputRef}
         />
         <div className="toggle-all-container">
           <ToggleAll name="^" onClick={() => this.handleToggleAll()} />
@@ -121,14 +142,16 @@ export default class Workspace extends React.Component {
           onClear={this.handleClearCompleted}
           onFilter={this.handleFilterChange}
           pgIndex={this.state.currentPage}
+          handleEdit={this.handleEdit}
+          handleEditChange={this.handleEditChange}
+          handleEditSubmit={this.handleEditSubmit}
         />
         <Pagination
-          pageNumbers = {pageNumbers}
+          pageNumbers={pageNumbers}
           goToNextPage={this.goToNextPage}
           goToPrevPage={this.goToPrevPage}
           currentPage={currentPage}
           handlePageChange={this.handlePageChange}
-          // pageNumbers={Array.from({ length: nPages }, (_, i) => i + 1)}
         />
       </div>
     );

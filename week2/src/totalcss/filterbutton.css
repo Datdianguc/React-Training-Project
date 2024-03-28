@@ -1,5 +1,9 @@
 .menu > ul > li > button {
-    background: #fff;
-    border: 1px solid transparent;
-    margin: 3px;
+  background: #fff;
+  border: 1px solid transparent;
+  margin: 3px;
+}
+
+.menu > ul > li > button:hover {
+  outline: 1px solid #ce4646;
 }

@@ -1,22 +1,28 @@
 import React from "react";
 import Menu from "./Menu";
-import "../totalcss/View.css"
+import "../totalcss/View.css";
 export default class View extends React.Component {
   constructor(props) {
-    super(props);  
+    super(props);
   }
   state = {
-    view: []
-  }
+    view: [],
+  };
 
-  componentDidUpdate(prevProps){
-    if (this.props.list !== prevProps.list || this.props.pgIndex !== prevProps.pgIndex){
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.list !== prevProps.list ||
+      this.props.pgIndex !== prevProps.pgIndex
+    ) {
       this.setState({
-        view: this.props.list.slice(5 * this.props.pgIndex - 5, 5 * this.props.pgIndex)
-      })
+        view: this.props.list.slice(
+          5 * this.props.pgIndex - 5,
+          5 * this.props.pgIndex
+        ),
+      });
     }
   }
-  
+
   render() {
     return (
       <div className="view">
@@ -36,6 +42,12 @@ export default class View extends React.Component {
             >
               {item.name}
             </label>
+            <button
+              className="edit"
+              onClick={() => this.props.handleEdit(item.id, item.name)}
+            >
+              edit
+            </button>
             <div className="erase">
               <button onClick={() => this.props.onClick(item.id)}>X</button>
             </div>
