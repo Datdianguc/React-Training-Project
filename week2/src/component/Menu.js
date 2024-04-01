@@ -1,6 +1,7 @@
 import React from "react";
 import FilterButton from "./filterbutton";
 import "../totalcss/Menu.css"
+import { FILTER_STATUS } from "./Workspace";
 export default class Menu extends React.Component {
   constructor(props) {
     super(props);
@@ -13,19 +14,19 @@ export default class Menu extends React.Component {
           <li>
             <FilterButton
               name="All"
-              onClick={() => this.props.onFilter("all")}
+              onClick={() => this.props.onFilter(FILTER_STATUS.ALL)}
             />
           </li>
           <li>
             <FilterButton
               name="Active"
-              onClick={() => this.props.onFilter("active")}
+              onClick={() => this.props.onFilter(FILTER_STATUS.ACTIVE)}
             />
           </li>
           <li>
             <FilterButton
               name="Completed"
-              onClick={() => this.props.onFilter("completed")}
+              onClick={() => this.props.onFilter(FILTER_STATUS.COMPLETED)}
             />
           </li>
         </ul>

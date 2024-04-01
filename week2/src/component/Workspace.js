@@ -4,7 +4,12 @@ import Pagination from "./Pagination";
 import ToggleAll from "./ToggleAll";
 import View from "./View";
 import ForwardedInput from "./Input";
-export default class Workspace extends React.Component {
+export const FILTER_STATUS = {
+  ALL: "all",
+  ACTIVE: "active",
+  COMPLETED: "completed"
+}
+export class Workspace extends React.Component {
   constructor(){
     super();
     this.inputRef = React.createRef();
@@ -16,28 +21,9 @@ export default class Workspace extends React.Component {
     list: [],
     currentPage: 1,
     recordsPerPage: 5,
-    editingId: null,
-    editText: "",
   };
 
-  handleChange = (event) => {
-    this.setState({ text: event.target.value });
-  };
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-    const newItem = this.state.text;
-    if (newItem.trim() !== "") {
-      this.setState((prevState) => ({
-        count: prevState.count + 1,
-        list: [
-          ...prevState.list,
-          { id: prevState.count + 1, name: newItem, checked: false },
-        ],
-        text: "",
-      }));
-    }
-  };
+  handle
 
   handleCheckboxChange = (id) => {
     this.setState((prevState) => ({
@@ -76,7 +62,7 @@ export default class Workspace extends React.Component {
 
   handlePageChange = (currentPage) => {
     this.setState({
-      currentPage: currentPage,
+      currentPage,
     });
   };
   goToNextPage = () => {
@@ -87,23 +73,6 @@ export default class Workspace extends React.Component {
   goToPrevPage = () => {
     const { currentPage } = this.state;
     if (currentPage !== 1) this.setState({ currentPage: currentPage - 1 });
-  };
-
-  handleEdit = (id, name) => {
-    this.setState({ editingId: id, editText: name });
-  };
-
-  handleEditChange = (event) => {
-    this.setState({ editText: event.target.value });
-    this.inputRef.current.focus();
-  };
-
-  handleEditSubmit = (id) => {
-    const { list, editText } = this.state;
-    const updatedList = list.map((item) =>
-      item.id === id ? { ...item, name: editText } : item
-    );
-    this.setState({ list: updatedList, editingId: null, editText: "" });
   };
 
   render() {
@@ -142,7 +111,7 @@ export default class Workspace extends React.Component {
           onClear={this.handleClearCompleted}
           onFilter={this.handleFilterChange}
           pgIndex={this.state.currentPage}
-          handleEdit={this.handleEdit}
+          handleEdit={this.editItem}
           handleEditChange={this.handleEditChange}
           handleEditSubmit={this.handleEditSubmit}
         />

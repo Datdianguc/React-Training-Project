@@ -7,6 +7,8 @@ export default class View extends React.Component {
   }
   state = {
     view: [],
+    editingId: null,
+    editText: "",
   };
 
   componentDidUpdate(prevProps) {
