@@ -3,16 +3,18 @@ import "../totalcss/Workspace.css";
 import Pagination from "./Pagination";
 import ToggleAll from "./ToggleAll";
 import View from "./View";
-import ForwardedInput from "./Input";
+import Input from "./Input";
 export const FILTER_STATUS = {
   ALL: "all",
   ACTIVE: "active",
-  COMPLETED: "completed"
-}
-export class Workspace extends React.Component {
-  constructor(){
+  COMPLETED: "completed",
+};
+export default class Workspace extends React.Component {
+  constructor() {
     super();
-    this.inputRef = React.createRef();
+    this.WorkspaceRef = React.createRef();
+    this.ScrollRef = React.createRef();
+    this.editingID = null;
   }
   state = {
     count: 0,
@@ -21,9 +23,35 @@ export class Workspace extends React.Component {
     list: [],
     currentPage: 1,
     recordsPerPage: 5,
+    editing: false,
   };
 
-  handle
+  editRequest = (id, name) => {
+    this.setState({ editing: true });
+    this.WorkspaceRef.current.focus();
+    this.WorkspaceRef.current.value = name;
+    this.editingID = id;
+    console.log(this.state.editing);
+  };
+
+  editItem = (todo) => {
+    const { list } = this.state;
+    this.setState({
+      list: list.map((item) =>
+        item.id === this.editingID ? { todo: todo, ...item } : item
+      ),
+    });
+  };
+
+  addItem = (item) => {
+    const { list, count } = this.state;
+    if (item.length > 1) {
+      this.setState({
+        list: [...list, { todo: item, checked: false, id: list.length + 1 }],
+        count: count + 1,
+      });
+    }
+  };
 
   handleCheckboxChange = (id) => {
     this.setState((prevState) => ({
@@ -33,11 +61,16 @@ export class Workspace extends React.Component {
     }));
   };
 
-  handleDelete = (id) => {
-    this.setState((prevState) => ({
-      list: prevState.list.filter((item) => item.id !== id),
-      count: this.state.count - 1,
-    }));
+  handleDelete = (item) => {
+    const { list, count } = this.state;
+    this.setState({
+      list: list.filter((i) => i.id !== item.id),
+    });
+    if (!item.status) {
+      this.setState({
+        count: count - 1,
+      });
+    }
   };
 
   handleFilterChange = (filter) => {
@@ -75,6 +108,15 @@ export class Workspace extends React.Component {
     if (currentPage !== 1) this.setState({ currentPage: currentPage - 1 });
   };
 
+  handleScroll = () => {
+    const {currentPage} = this.state;
+    if (this.ScrollRef.current.scrollTop === this.ScrollRef.current.scrollHeight - this.ScrollRef.current.clientHeight) {
+      this.setState({
+        currentPage: currentPage + 1 
+      })
+    }
+  }
+
   render() {
     const { list, filter, currentPage, recordsPerPage } = this.state;
     let filteredList = list;
@@ -85,19 +127,19 @@ export class Workspace extends React.Component {
     }
 
     const nPages = Math.ceil(list.length / recordsPerPage);
-
     const pageNumbers = [...Array(nPages + 1).keys()].slice(1);
-    //ouput = [1, 2, 3, ... ,8 , 9, 10]
 
     return (
       <div className="workspace">
-        <ForwardedInput
-          onSubmit={this.handleSubmit}
+        <Input
+          onAdd={this.addItem}
+          onEdit={this.editItem}
           value={this.state.text}
           className="pleasetype"
           placeholder="What needs to be done?"
           onChange={this.handleChange}
-          ref={this.inputRef}
+          workspaceRef={this.WorkspaceRef}
+          editing={this.state.editing}
         />
         <div className="toggle-all-container">
           <ToggleAll name="^" onClick={() => this.handleToggleAll()} />
@@ -107,21 +149,21 @@ export class Workspace extends React.Component {
           filter={this.state.filter}
           count={this.state.count}
           onChange={this.handleCheckboxChange}
-          onClick={this.handleDelete}
+          onDelete={this.handleDelete}
           onClear={this.handleClearCompleted}
           onFilter={this.handleFilterChange}
           pgIndex={this.state.currentPage}
-          handleEdit={this.editItem}
-          handleEditChange={this.handleEditChange}
-          handleEditSubmit={this.handleEditSubmit}
+          handleEdit={this.editRequest}
+          onScroll={this.handleScroll}
+          scrollRef={this.ScrollRef}
         />
-        <Pagination
+        {/* <Pagination
           pageNumbers={pageNumbers}
           goToNextPage={this.goToNextPage}
           goToPrevPage={this.goToPrevPage}
           currentPage={currentPage}
           handlePageChange={this.handlePageChange}
-        />
+        /> */}
       </div>
     );
   }

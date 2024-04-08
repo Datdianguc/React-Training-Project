@@ -1,56 +1,46 @@
 import React from "react";
-import "../totalcss/Input.css"
+import "../totalcss/Input.css";
 class Input extends React.Component {
   constructor(props) {
     super(props);
     this.inputRef = React.createRef();
-    this.editing = '';
-    this.isEditing = null;
+    // this.editing = this.props.editing;
+    this.state = {
+      input: "",
+    };
   }
-
-  editItem = (id, name) => {
-    this.focusInput();
-    this.inputRef.current.value = name;
-    this.setState({editing: id});
-  }
-
-  addItem = (id, item) => {
-    const updatedList = list.map((item) =>
-      item.id === id ? { ...item, name: editText } : item
-    );
-    this.setState({ list: updatedList, editingId: null, editText: "" });
-  };
-
-  focusInput = () => {
-    this.inputRef.current.focus();
-  };
 
   handleChange = (event) => {
-    this.editing = event.target.value;
+    this.setState({ input: event.target.value });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    if (this.state.editing) {
-      this.props.editItem(id);
+    const newItem = this.props.workspaceRef.current.value;
+    if (this.props.editing) {
+      this.props.onEdit(newItem);
     } else {
-      this.props.addItem({name: this.inputRef.current.value})
+      this.props.onAdd(this.state.input);
+      this.setState({ input: "" });
     }
-  }
+  };
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input
-          value={this.editing}
-          className={this.props.className}
-          placeholder={this.props.placeholder}
-          onChange={this.props.onChange}
-          ref={this.inputRef}
-        />
-      </form>
-    )
- };
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <input
+            value={this.state.input}
+            className={this.props.className}
+            placeholder={this.props.placeholder}
+            onChange={this.handleChange}
+            ref={this.props.workspaceRef}
+            editItem={this.editItem}
+          />
+        </form>
+      </div>
+    );
+  }
 }
 
 export default Input;

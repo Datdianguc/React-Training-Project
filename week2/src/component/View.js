@@ -18,7 +18,8 @@ export default class View extends React.Component {
     ) {
       this.setState({
         view: this.props.list.slice(
-          5 * this.props.pgIndex - 5,
+          // 5 * this.props.pgIndex - 5,
+          0,
           5 * this.props.pgIndex
         ),
       });
@@ -27,7 +28,12 @@ export default class View extends React.Component {
 
   render() {
     return (
-      <div className="view">
+      <div
+        className="view"
+        style={{ height: 300, overflow: "auto" }}
+        ref={this.props.scrollRef}
+        onScroll={this.props.onScroll}
+      >
         {this.state.view.map((item) => (
           <div className="ul-todo-list" key={item.id}>
             <input
@@ -42,20 +48,20 @@ export default class View extends React.Component {
                 textDecoration: item.checked ? "line-through" : "none",
               }}
             >
-              {item.name}
+              {item.todo}
             </label>
             <button
               className="edit"
-              onClick={() => this.props.handleEdit(item.id, item.name)}
+              onClick={() => this.props.handleEdit(item.id, item.todo)}
             >
               edit
             </button>
             <div className="erase">
-              <button onClick={() => this.props.onClick(item.id)}>X</button>
+              <button onClick={() => this.props.onDelete(item)}>X</button>
             </div>
           </div>
         ))}
-        {this.props.count ? (
+        {this.props.list.length > 0 ? (
           <Menu
             count={this.props.count}
             onClear={this.props.onClear}
