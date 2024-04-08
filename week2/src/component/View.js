@@ -52,7 +52,7 @@ export default class View extends React.Component {
             </label>
             <button
               className="edit"
-              onClick={() => this.props.handleEdit(item.id, item.todo)}
+              onClick={() => this.props.handleEdit(item.id, item)}
             >
               edit
             </button>

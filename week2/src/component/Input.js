@@ -7,6 +7,7 @@ class Input extends React.Component {
     // this.editing = this.props.editing;
     this.state = {
       input: "",
+      item: {}
     };
   }
 
@@ -16,9 +17,9 @@ class Input extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const newItem = this.props.workspaceRef.current.value;
     if (this.props.editing) {
-      this.props.onEdit(newItem);
+      console.log(this.props.editing);
+      this.props.onEdit(this.state.input);
     } else {
       this.props.onAdd(this.state.input);
       this.setState({ input: "" });
@@ -34,7 +35,7 @@ class Input extends React.Component {
             className={this.props.className}
             placeholder={this.props.placeholder}
             onChange={this.handleChange}
-            ref={this.props.workspaceRef}
+            ref={this.inputRef}
             editItem={this.editItem}
           />
         </form>

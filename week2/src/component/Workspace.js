@@ -14,6 +14,7 @@ export default class Workspace extends React.Component {
     super();
     this.WorkspaceRef = React.createRef();
     this.ScrollRef = React.createRef();
+    this.InputChildRef = React.createRef();
     this.editingID = null;
   }
   state = {
@@ -28,19 +29,20 @@ export default class Workspace extends React.Component {
 
   editRequest = (id, name) => {
     this.setState({ editing: true });
-    this.WorkspaceRef.current.focus();
-    this.WorkspaceRef.current.value = name;
+    this.InputChildRef.current.inputRef.current.focus();
+    this.InputChildRef.current.state.input = name.todo;
     this.editingID = id;
-    console.log(this.state.editing);
   };
 
   editItem = (todo) => {
-    const { list } = this.state;
-    this.setState({
-      list: list.map((item) =>
-        item.id === this.editingID ? { todo: todo, ...item } : item
-      ),
-    });
+    console.log(todo);
+    console.log(this.editingID);
+    this.setState((prevState) => ({
+      list: prevState.list.map((item) => {
+        console.log(item);
+        return item.id === this.editingID ? { todo: todo, ...item } : item;
+      }),
+    }));
   };
 
   addItem = (item) => {
@@ -109,13 +111,16 @@ export default class Workspace extends React.Component {
   };
 
   handleScroll = () => {
-    const {currentPage} = this.state;
-    if (this.ScrollRef.current.scrollTop === this.ScrollRef.current.scrollHeight - this.ScrollRef.current.clientHeight) {
+    const { currentPage } = this.state;
+    if (
+      this.ScrollRef.current.scrollTop ===
+      this.ScrollRef.current.scrollHeight - this.ScrollRef.current.clientHeight
+    ) {
       this.setState({
-        currentPage: currentPage + 1 
-      })
+        currentPage: currentPage + 1,
+      });
     }
-  }
+  };
 
   render() {
     const { list, filter, currentPage, recordsPerPage } = this.state;
@@ -140,6 +145,7 @@ export default class Workspace extends React.Component {
           onChange={this.handleChange}
           workspaceRef={this.WorkspaceRef}
           editing={this.state.editing}
+          ref={this.InputChildRef}
         />
         <div className="toggle-all-container">
           <ToggleAll name="^" onClick={() => this.handleToggleAll()} />
