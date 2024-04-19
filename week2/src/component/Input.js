@@ -7,9 +7,13 @@ class Input extends React.Component {
     // this.editing = this.props.editing;
     this.state = {
       input: "",
-      item: {}
+      item: {},
     };
   }
+
+  changeState = (input) => {
+    this.setState({input});
+  };
 
   handleChange = (event) => {
     this.setState({ input: event.target.value });
@@ -17,9 +21,9 @@ class Input extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    if (this.props.editing) {
-      console.log(this.props.editing);
+    if (this.props.editItem.editingID) {
       this.props.onEdit(this.state.input);
+      this.setState({ input: "" });
     } else {
       this.props.onAdd(this.state.input);
       this.setState({ input: "" });

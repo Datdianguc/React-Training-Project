@@ -7,31 +7,32 @@ export default class Menu extends React.Component {
     super(props);
   }
   render() {
+    const {onFilter, count, onClear} = this.props;
     return (
       <div className="menu">
-        <div className="counter">{this.props.count} items left!</div>
+        <div className="counter">{count} items left!</div>
         <ul>
           <li>
             <FilterButton
               name="All"
-              onClick={() => this.props.onFilter(FILTER_STATUS.ALL)}
+              onClick={() => onFilter(FILTER_STATUS.ALL)}
             />
           </li>
           <li>
             <FilterButton
               name="Active"
-              onClick={() => this.props.onFilter(FILTER_STATUS.ACTIVE)}
+              onClick={() => onFilter(FILTER_STATUS.ACTIVE)}
             />
           </li>
           <li>
             <FilterButton
               name="Completed"
-              onClick={() => this.props.onFilter(FILTER_STATUS.COMPLETED)}
+              onClick={() => onFilter(FILTER_STATUS.COMPLETED)}
             />
           </li>
         </ul>
         <div className="clearCompleted">
-          <button onClick={this.props.onClear}>Clear Completed</button>
+          <button onClick={onClear}>Clear Completed</button>
         </div>
       </div>
     );

@@ -4,6 +4,7 @@ import Pagination from "./Pagination";
 import ToggleAll from "./ToggleAll";
 import View from "./View";
 import Input from "./Input";
+import ThemeTogglerButton from "./theme-toggler-button";
 export const FILTER_STATUS = {
   ALL: "all",
   ACTIVE: "active",
@@ -15,34 +16,36 @@ export default class Workspace extends React.Component {
     this.WorkspaceRef = React.createRef();
     this.ScrollRef = React.createRef();
     this.InputChildRef = React.createRef();
-    this.editingID = null;
+    this.editItem = {
+      editingID: null,
+    };
   }
   state = {
     count: 0,
     text: "",
-    filter: "all",
+    filter: FILTER_STATUS.ALL,
     list: [],
     currentPage: 1,
     recordsPerPage: 5,
-    editing: false,
   };
 
   editRequest = (id, name) => {
-    this.setState({ editing: true });
     this.InputChildRef.current.inputRef.current.focus();
-    this.InputChildRef.current.state.input = name.todo;
-    this.editingID = id;
+    this.InputChildRef.current.changeState(name.todo);
+    this.editItem.editingID = id;
   };
 
-  editItem = (todo) => {
-    console.log(todo);
-    console.log(this.editingID);
-    this.setState((prevState) => ({
-      list: prevState.list.map((item) => {
-        console.log(item);
-        return item.id === this.editingID ? { todo: todo, ...item } : item;
+  handleEditItem = (todo) => {
+    this.setState({
+      list: this.state.list.map((item) => {
+        return item.id === this.editItem.editingID
+          ? { ...item, todo: todo }
+          : item;
       }),
-    }));
+    });
+    this.editItem = {
+      editingID: null,
+    };
   };
 
   addItem = (item) => {
@@ -61,6 +64,13 @@ export default class Workspace extends React.Component {
         item.id === id ? { ...item, checked: !item.checked } : item
       ),
     }));
+  };
+
+  countHandler = (event) => {
+    const { count } = this.state;
+    this.setState({
+      count: event.target.checked ? count - 1 : count + 1,
+    });
   };
 
   handleDelete = (item) => {
@@ -136,15 +146,16 @@ export default class Workspace extends React.Component {
 
     return (
       <div className="workspace">
+        <ThemeTogglerButton/>
         <Input
           onAdd={this.addItem}
-          onEdit={this.editItem}
+          onEdit={this.handleEditItem}
           value={this.state.text}
           className="pleasetype"
           placeholder="What needs to be done?"
           onChange={this.handleChange}
           workspaceRef={this.WorkspaceRef}
-          editing={this.state.editing}
+          editItem={this.editItem}
           ref={this.InputChildRef}
         />
         <div className="toggle-all-container">
@@ -162,6 +173,7 @@ export default class Workspace extends React.Component {
           handleEdit={this.editRequest}
           onScroll={this.handleScroll}
           scrollRef={this.ScrollRef}
+          onCountControl={this.countHandler}
         />
         {/* <Pagination
           pageNumbers={pageNumbers}

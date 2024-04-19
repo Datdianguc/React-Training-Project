@@ -27,12 +27,13 @@ export default class View extends React.Component {
   }
 
   render() {
+    const {count, onClear, onFilter, scrollRef, onScroll, onChange, handleEdit, onDelete, onCountControl} = this.props;
     return (
       <div
         className="view"
         style={{ height: 300, overflow: "auto" }}
-        ref={this.props.scrollRef}
-        onScroll={this.props.onScroll}
+        ref={scrollRef}
+        onScroll={onScroll}
       >
         {this.state.view.map((item) => (
           <div className="ul-todo-list" key={item.id}>
@@ -40,7 +41,8 @@ export default class View extends React.Component {
               className="toggle"
               type="checkbox"
               checked={item.checked}
-              onChange={() => this.props.onChange(item.id)}
+              onClick={() => onChange(item.id)}
+              onChange={onCountControl}
             />
             <label
               className="todo-item-label"
@@ -52,20 +54,20 @@ export default class View extends React.Component {
             </label>
             <button
               className="edit"
-              onClick={() => this.props.handleEdit(item.id, item)}
+              onClick={() => handleEdit(item.id, item)}
             >
               edit
             </button>
             <div className="erase">
-              <button onClick={() => this.props.onDelete(item)}>X</button>
+              <button onClick={() => onDelete(item)}>X</button>
             </div>
           </div>
         ))}
         {this.props.list.length > 0 ? (
           <Menu
-            count={this.props.count}
-            onClear={this.props.onClear}
-            onFilter={this.props.onFilter}
+            count={count}
+            onClear={onClear}
+            onFilter={onFilter}
           />
         ) : (
           ""
