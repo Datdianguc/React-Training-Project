@@ -5,6 +5,7 @@ import ToggleAll from "./ToggleAll";
 import View from "./View";
 import Input from "./Input";
 import ThemeTogglerButton from "./theme-toggler-button";
+import { ThemeContext } from "./ThemeProvider";
 export const FILTER_STATUS = {
   ALL: "all",
   ACTIVE: "active",
@@ -143,9 +144,10 @@ export default class Workspace extends React.Component {
 
     const nPages = Math.ceil(list.length / recordsPerPage);
     const pageNumbers = [...Array(nPages + 1).keys()].slice(1);
+    const {theme} = this.context;
 
     return (
-      <div className="workspace">
+      <div className="workspace" style = {{backgroundColor: theme.background2}}>
         <ThemeTogglerButton/>
         <Input
           onAdd={this.addItem}
@@ -186,3 +188,5 @@ export default class Workspace extends React.Component {
     );
   }
 }
+
+Workspace.contextType = ThemeContext;

@@ -1,11 +1,13 @@
 import React from "react";
-import "../totalcss/Header.css"
+import "../totalcss/Header.css";
+import { ThemeContext } from "./ThemeProvider";
 class Header extends React.Component {
   render() {
-    return (
-        <h1>todos</h1>
-    );
+    const { theme } = this.context;
+    return <h1 style={{ color: theme.colorHeader }}>todos</h1>;
   }
 }
 
 export default Header;
+
+Header.contextType = ThemeContext;

@@ -3,17 +3,23 @@ import "./App.css";
 import Header from "./component/Header";
 import Workspace from "./component/Workspace";
 import Footer from "./component/Footer";
+import { ThemeContext } from "./component/ThemeProvider";
 
 class App extends React.Component {
   render() {
+    const { theme } = this.context;
     return (
-      <div className="container">
-        <Header />
-        <Workspace />
-        <Footer />
+      <div style={{ backgroundColor: theme.background }}>
+        <div className="container">
+          <Header />
+          <Workspace />
+          <Footer />
+        </div>
       </div>
     );
   }
 }
+
+App.contextType = ThemeContext;
 
 export default App;

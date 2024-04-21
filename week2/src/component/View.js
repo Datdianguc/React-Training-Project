@@ -1,6 +1,7 @@
 import React from "react";
 import Menu from "./Menu";
 import "../totalcss/View.css";
+import { ThemeContext } from "./ThemeProvider";
 export default class View extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +28,18 @@ export default class View extends React.Component {
   }
 
   render() {
-    const {count, onClear, onFilter, scrollRef, onScroll, onChange, handleEdit, onDelete, onCountControl} = this.props;
+    const {
+      count,
+      onClear,
+      onFilter,
+      scrollRef,
+      onScroll,
+      onChange,
+      handleEdit,
+      onDelete,
+      onCountControl,
+    } = this.props;
+    const { theme } = this.context;
     return (
       <div
         className="view"
@@ -48,6 +60,7 @@ export default class View extends React.Component {
               className="todo-item-label"
               style={{
                 textDecoration: item.checked ? "line-through" : "none",
+                color: theme.color,
               }}
             >
               {item.todo}
@@ -55,20 +68,30 @@ export default class View extends React.Component {
             <button
               className="edit"
               onClick={() => handleEdit(item.id, item)}
+              style={{
+                color: theme.color,
+                border: theme.border,
+                backgroundColor: theme.backgroundButton,
+              }}
             >
               edit
             </button>
             <div className="erase">
-              <button onClick={() => onDelete(item)}>X</button>
+              <button
+                onClick={() => onDelete(item)}
+                style={{
+                  color: theme.color,
+                  border: theme.border,
+                  backgroundColor: theme.backgroundButton,
+                }}
+              >
+                X
+              </button>
             </div>
           </div>
         ))}
         {this.props.list.length > 0 ? (
-          <Menu
-            count={count}
-            onClear={onClear}
-            onFilter={onFilter}
-          />
+          <Menu count={count} onClear={onClear} onFilter={onFilter} />
         ) : (
           ""
         )}
@@ -76,3 +99,5 @@ export default class View extends React.Component {
     );
   }
 }
+
+View.contextType = ThemeContext;

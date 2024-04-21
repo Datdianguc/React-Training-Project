@@ -1,18 +1,29 @@
 import React from "react";
 import { produce } from "immer";
+
 export const themes = {
   light: {
-    foreground: "#000000",
     background: "#f5f5f5",
+    background2: "#fff",
+    backgroundToggler: "#fff",
+    backgroundButton:"#fff",
+    color: "#000",
+    colorHeader: "#b83f45",
+    border: "none",
   },
   dark: {
-    foreground: "#ffffff",
-    background: "#222222",
+    background: "#0C134F",
+    background2: "#1D267D",
+    backgroundToggler: "#5C469C",
+    backgroundButton:"#5C469C",
+    color: "#D4ADFC",
+    colorHeader: "#D4ADFC",
+    border: "none",
   },
 };
 
 export const ThemeContext = React.createContext({
-  theme: themes.dark,
+  theme: themes.light,
   toggleTheme: () => null,
 });
 
@@ -20,7 +31,7 @@ export default class ThemeProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      theme: themes.dark,
+      theme: themes.light,
     };
   }
   toggleTheme = () => {
