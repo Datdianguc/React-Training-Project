@@ -1,9 +1,10 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState } from "react";
 import "../totalcss/Workspace.css";
 // import Pagination from "./Pagination";
 import ToggleAll from "./ToggleAll";
 import View from "./View";
 import InputComponent from "./Input";
+import { produce } from "immer";
 // import ThemeTogglerButton from "./theme-toggler-button";
 // import { ThemeContext } from "./ThemeProvider";
 export const FILTER_STATUS = {
@@ -14,7 +15,7 @@ export const FILTER_STATUS = {
 
 const WorkspaceComponent = () => {
   const ScrollRef = useRef(null);
-  const InputChildRef = useRef(null);
+  const inputChildRef = useRef(null);
   // const theme = useContext(ThemeContext);
   // const [editItem, setEditItem] = useState({ editingID: null });
   // const [state, setState] = useState({
@@ -30,8 +31,7 @@ const WorkspaceComponent = () => {
   const [list, setList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  let EditingID = { id: null };
-  const editItem = { EditingID: null };
+  let editingId = null;
   let count = list.filter((i) => !i.checked).length;
 
   const filteredList = list.filter((item) => {
@@ -44,24 +44,22 @@ const WorkspaceComponent = () => {
   });
 
   const editRequest = (id, name) => {
-    if (InputChildRef.current && InputChildRef.current.inputRef.current) {
-      InputChildRef.current.inputRef.current.focus();
-      InputChildRef.current.changeState(name.todo);
-      EditingID.id = id;
-    }
+    editingId = id;
+    inputChildRef.current.focus();
+    inputChildRef.current.value = name;
   };
 
-  const handleEditItem = (todo) => {
-    setList(
-      list.map((item) => {
-        return item.id === editItem.EditingID ? { ...item, todo: todo } : item;
-      })
-    );
-  };
-
-  const addItem = (item) => {
-    if (item.length > 1) {
-      setList([...list, { todo: item, checked: false, id: list.length + 1 }]);
+  const addOrEdit = (item) => {
+    if (editingId) {
+      setList(list.map((i) => (i.id === editingId ? { ...i, todo: item } : i)));
+      editingId = null;
+    } else {
+      setList(
+        produce((draftState) => {
+          const todo = { todo: item, checked: false, id: list.length + 1 };
+          draftState.push(todo);
+        })
+      );
     }
   };
 
@@ -78,7 +76,7 @@ const WorkspaceComponent = () => {
   };
 
   const handleFilterChange = (filter) => {
-    setFilter({ filter });
+    setFilter(filter);
   };
 
   const handleClearCompleted = () => {
@@ -106,13 +104,10 @@ const WorkspaceComponent = () => {
   return (
     <>
       <InputComponent
-        onAdd={addItem}
-        onEdit={handleEditItem}
+        onSubmit={addOrEdit}
         className="pleasetype"
         placeholder="What needs to be done?"
-        editItem={editItem}
-        ref={InputChildRef}
-        editingID={EditingID}
+        inputRef={inputChildRef}
       />
       <div className="toggle-all-container">
         <ToggleAll name="^" onClick={handleToggleAll} />

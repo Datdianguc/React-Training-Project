@@ -4,9 +4,18 @@ import "../totalcss/View.css";
 // import { ThemeContext } from "./ThemeProvider";
 export default function View(props) {
   const [view, setView] = useState([]);
-  const [EditingID, setEditingID] = useState(null);
-  const { count, list, pgIndex, scrollRef, onScroll, onChange, handleEdit, onDelete, onClear, onFilter } =
-    props;
+  const {
+    count,
+    list,
+    pgIndex,
+    scrollRef,
+    onScroll,
+    onChange,
+    handleEdit,
+    onDelete,
+    onClear,
+    onFilter,
+  } = props;
   // state = {
   //   view: [],
   //   editingId: null,
@@ -45,9 +54,9 @@ export default function View(props) {
   return (
     <div
       className="view"
-      // style={{ height: 300, overflow: "auto" }}
       ref={scrollRef}
       onScroll={onScroll}
+      style={{ height: 300, overflow: "auto" }}
     >
       {view.map((item) => (
         <div className="ul-todo-list" key={item.id}>
@@ -68,7 +77,7 @@ export default function View(props) {
           </label>
           <button
             className="edit"
-            onClick={() => handleEdit(item.id, item)}
+            onClick={() => handleEdit(item.id, item.todo)}
             /*style={{
                 color: theme.color,
                 border: theme.border,

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useContext} from "react";
+import React from "react";
 import FilterButton from "./filterbutton";
 import "../totalcss/Menu.css";
 import { FILTER_STATUS } from "./Workspace";

@@ -1,43 +1,35 @@
-import React, {useState, useRef, useEffect} from "react";
+import React, { useState, useContext } from "react";
 import "../totalcss/Input.css";
 // import { ThemeContext } from "./ThemeProvider";
-export default function InputComponent(props){
+export default function InputComponent(props) {
+  const {
+    onSubmit,
+    className,
+    placeholder,
+    editItem,
+    inputRef,
+  } = props;
 
-  const {onAdd, onEdit, className, placeholder, editItem} = props;
-  const inputRef = useRef(null);
+  // const [theme] = {ThemeContext};
+
   const [input, setInput] = useState("");
 
-  const changeState = (value) => {
-    setInput(value);
-  };
-
   const handleChange = (event) => {
-    setInput(event.target.value );
+    setInput(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (editItem.editingID !== null) {
-      onEdit(editItem.editingID, input);
-      setInput("");
-    } else {
-      onAdd(input);
-      setInput("");
-    }
+    onSubmit(input);
+    setInput("");
   };
-
-  useEffect(() => {
-    if (editItem.editingID !== null && inputRef.current !== null) {
-      inputRef.current.focus();
-    }
-  }, [editItem]);
 
   // const { theme } = this.context;
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <input
-          value={input.input}
+          value={input}
           className={className}
           placeholder={placeholder}
           onChange={handleChange}
@@ -50,4 +42,4 @@ export default function InputComponent(props){
   );
 }
 
-// Input.contextType = ThemeContext;
+// InputComponent.contextType = ThemeContext;
