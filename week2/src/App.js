@@ -3,13 +3,12 @@ import "./App.css";
 import Header from "./component/Header";
 import Workspace from "./component/Workspace";
 import Footer from "./component/Footer";
-import { ThemeContext } from "./component/ThemeProvider";
+// import { ThemeContext } from "./component/ThemeProvider";
 
-class App extends React.Component {
-  render() {
-    const { theme } = this.context;
+export default function App() {
+    // const { theme } = this.context;
     return (
-      <div style={{ backgroundColor: theme.background }}>
+      <div /*style={{ backgroundColor: theme.background }}*/>
         <div className="container">
           <Header />
           <Workspace />
@@ -18,8 +17,7 @@ class App extends React.Component {
       </div>
     );
   }
-}
 
-App.contextType = ThemeContext;
+// App.contextType = ThemeContext;
 
-export default App;
+

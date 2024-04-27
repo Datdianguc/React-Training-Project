@@ -1,56 +1,53 @@
-import React from "react";
+import React, {useState, useRef, useEffect} from "react";
 import "../totalcss/Input.css";
-import { ThemeContext } from "./ThemeProvider";
-class Input extends React.Component {
-  constructor(props) {
-    super(props);
-    this.inputRef = React.createRef();
-    this.state = {
-      input: "",
-      item: {},
-    };
-  }
+// import { ThemeContext } from "./ThemeProvider";
+export default function InputComponent(props){
 
-  changeState = (input) => {
-    this.setState({ input });
+  const {onAdd, onEdit, className, placeholder, editItem} = props;
+  const inputRef = useRef(null);
+  const [input, setInput] = useState("");
+
+  const changeState = (value) => {
+    setInput(value);
   };
 
-  handleChange = (event) => {
-    this.setState({ input: event.target.value });
+  const handleChange = (event) => {
+    setInput(event.target.value );
   };
 
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    if (this.props.editItem.editingID) {
-      this.props.onEdit(this.state.input);
-      this.setState({ input: "" });
+    if (editItem.editingID !== null) {
+      onEdit(editItem.editingID, input);
+      setInput("");
     } else {
-      this.props.onAdd(this.state.input);
-      this.setState({ input: "" });
+      onAdd(input);
+      setInput("");
     }
   };
 
-  render() {
-    const {className, placeholder} = this.props
-    const { theme } = this.context;
-    return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            value={this.state.input}
-            className={className}
-            placeholder={placeholder}
-            onChange={this.handleChange}
-            ref={this.inputRef}
-            editItem={this.editItem}
-            style={{ color: theme.color }}
-          />
-        </form>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (editItem.editingID !== null && inputRef.current !== null) {
+      inputRef.current.focus();
+    }
+  }, [editItem]);
+
+  // const { theme } = this.context;
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          value={input.input}
+          className={className}
+          placeholder={placeholder}
+          onChange={handleChange}
+          ref={inputRef}
+          editItem={editItem}
+          // style={{ color: theme.color }}
+        />
+      </form>
+    </div>
+  );
 }
 
-Input.contextType = ThemeContext;
-
-export default Input;
+// Input.contextType = ThemeContext;

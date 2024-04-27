@@ -1,17 +1,14 @@
-import React from "react";
-import { ThemeContext } from "./ThemeProvider";
+import React, {useState, useRef} from "react";
 
-export default class ToggleAll extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    const { onClick, name } = this.props;
-    const { theme } = this.context;
+// import { ThemeContext } from "./ThemeProvider";
+
+export default function ToggleAll(props) {
+    const { onClick, name } = props;
+    // const { theme } = this.context;
     return (
       <div>
         <button
-          style={{ backgroundColor: theme.background2, border: theme.border }}
+          // style={{ backgroundColor: theme.background2, border: theme.border }}
           onClick={onClick}
         >
           {name}
@@ -19,6 +16,6 @@ export default class ToggleAll extends React.Component {
       </div>
     );
   }
-}
 
-ToggleAll.contextType = ThemeContext;
+
+// ToggleAll.contextType = ThemeContext;
