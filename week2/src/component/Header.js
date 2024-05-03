@@ -1,9 +1,8 @@
-import React from "react";
+import React, {useContext} from "react";
 import "../totalcss/Header.css";
-// import { ThemeContext } from "./ThemeProvider";
+import { ThemeContext } from "./ThemeProvider";
 export default function Header() {
-    // const { theme } = this.context;
-    return ( <h1 /*style={{ color: theme.colorHeader }}*/>todos</h1> );
+    const { theme } = useContext(ThemeContext);
+    return ( <h1 style={{ color: theme.colorHeader }}>todos</h1> );
   }
 
-// Header.contextType = ThemeContext;

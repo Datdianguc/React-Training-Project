@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../totalcss/Footer.css";
-// import { ThemeContext } from "./ThemeProvider";
+import { ThemeContext } from "./ThemeProvider";
 export default function Footer(){
-    // const { theme } = this.context;
+    const { theme } = useContext(ThemeContext);
     return (
-      <div className="Footer" /*style={{ color: theme.color }}*/>
+      <div className="Footer" style={{ color: theme.color }}>
         <p>Double-click to edit a Todo</p>
         <p>Created by the TodoMVC team</p>
         <p>
           Part of{" "}
-          <a /*style={{ color: theme.color }}*/ href="http://todomvc.com">
+          <a style={{ color: theme.color }} href="http://todomvc.com">
             TodoMVC
           </a>
         </p>
@@ -18,4 +18,3 @@ export default function Footer(){
   }
 
 
-// Footer.contextType = ThemeContext;

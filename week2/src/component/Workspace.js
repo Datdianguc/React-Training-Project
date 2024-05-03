@@ -30,7 +30,7 @@ const WorkspaceComponent = () => {
   const [list, setList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  let editingId = useRef(null);
+  const editingId = useRef(null);
   let count = list.filter((i) => !i.checked).length;
 
   const filteredList = list.filter((item) => {
