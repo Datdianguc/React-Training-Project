@@ -1,5 +1,4 @@
-import React, {useState} from "react";
-import { produce } from "immer";
+import React, { useState } from "react";
 
 export const themes = {
   light: {
@@ -30,22 +29,12 @@ export const ThemeContext = React.createContext({
 export default function ThemeProvider(props) {
   const { children } = props;
   const [theme, setTheme] = useState(themes.light);
-  // this.state = {
-  //   theme: themes.light,
-  // };
 
   const toggleTheme = () => {
-    setTheme((prevState) =>
-      produce(prevState, (draftState) => {
-        draftState.theme =
-          prevState.theme === themes.dark ? themes.light : themes.dark;
-        document.body.style.setProperty(
-          "background-color",
-          draftState.theme.background,
-          "important"
-        );
-      })
+    setTheme(
+      theme === themes.dark ? themes.light : themes.dark
     );
+    document.body.style.backgroundColor = theme === themes.dark.background ? themes.light.background : themes.dark.background
   };
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme: toggleTheme }}>

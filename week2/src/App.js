@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./App.css";
 import Header from "./component/Header";
 import Workspace from "./component/Workspace";
 import Footer from "./component/Footer";
-// import { ThemeContext } from "./component/ThemeProvider";
+import { ThemeContext } from "./component/ThemeProvider";
 
 export default function App() {
-    // const { theme } = this.context;
+    const {theme} = useContext(ThemeContext);
     return (
-      <div /*style={{ backgroundColor: theme.background }}*/>
+      <div style={{ backgroundColor: theme.background }}>
         <div className="container">
           <Header />
           <Workspace />
@@ -18,6 +18,6 @@ export default function App() {
     );
   }
 
-// App.contextType = ThemeContext;
+
 
 

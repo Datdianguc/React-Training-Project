@@ -5,8 +5,7 @@ import ToggleAll from "./ToggleAll";
 import View from "./View";
 import InputComponent from "./Input";
 import { produce } from "immer";
-// import ThemeTogglerButton from "./theme-toggler-button";
-// import { ThemeContext } from "./ThemeProvider";
+import ThemeTogglerButton from "./theme-toggler-button";
 export const FILTER_STATUS = {
   ALL: "all",
   ACTIVE: "active",
@@ -31,28 +30,28 @@ const WorkspaceComponent = () => {
   const [list, setList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  let editingId = null;
+  let editingId = useRef(null);
   let count = list.filter((i) => !i.checked).length;
 
   const filteredList = list.filter((item) => {
-    if (filter === "active") {
+    if (filter === FILTER_STATUS.ACTIVE) {
       return !item.checked;
-    } else if (filter === "completed") {
+    } else if (filter === FILTER_STATUS.COMPLETED) {
       return item.checked;
     }
     return true;
   });
 
   const editRequest = (id, name) => {
-    editingId = id;
+    editingId.current = id;
     inputChildRef.current.focus();
     inputChildRef.current.value = name;
   };
 
   const addOrEdit = (item) => {
-    if (editingId) {
-      setList(list.map((i) => (i.id === editingId ? { ...i, todo: item } : i)));
-      editingId = null;
+    if (editingId.current) {
+      setList(list.map((i) => (i.id === editingId.current ? { ...i, todo: item } : i)));
+      editingId.current = null;
     } else {
       setList(
         produce((draftState) => {
@@ -103,6 +102,7 @@ const WorkspaceComponent = () => {
 
   return (
     <>
+      <ThemeTogglerButton/>
       <InputComponent
         onSubmit={addOrEdit}
         className="pleasetype"

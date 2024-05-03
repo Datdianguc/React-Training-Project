@@ -1,16 +1,10 @@
 import React, { useState, useContext } from "react";
 import "../totalcss/Input.css";
-// import { ThemeContext } from "./ThemeProvider";
+import { ThemeContext } from "./ThemeProvider";
 export default function InputComponent(props) {
-  const {
-    onSubmit,
-    className,
-    placeholder,
-    editItem,
-    inputRef,
-  } = props;
+  const { onSubmit, className, placeholder, editItem, inputRef } = props;
 
-  // const [theme] = {ThemeContext};
+  const {theme} = useContext(ThemeContext);
 
   const [input, setInput] = useState("");
 
@@ -24,22 +18,19 @@ export default function InputComponent(props) {
     setInput("");
   };
 
-  // const { theme } = this.context;
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          value={input}
-          className={className}
-          placeholder={placeholder}
-          onChange={handleChange}
-          ref={inputRef}
-          editItem={editItem}
-          // style={{ color: theme.color }}
-        />
-      </form>
-    </div>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <input
+            value={input}
+            className={className}
+            placeholder={placeholder}
+            onChange={handleChange}
+            ref={inputRef}
+            editItem={editItem}
+            style={{ color: theme.color }}
+          />
+        </form>
+      </div>
   );
 }
-
-// InputComponent.contextType = ThemeContext;

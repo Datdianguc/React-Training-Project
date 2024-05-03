@@ -1,7 +1,7 @@
-import React, { useState, useRef, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Menu from "./Menu";
 import "../totalcss/View.css";
-// import { ThemeContext } from "./ThemeProvider";
+import { ThemeContext } from "./ThemeProvider";
 export default function View(props) {
   const [view, setView] = useState([]);
   const {
@@ -16,11 +16,8 @@ export default function View(props) {
     onClear,
     onFilter,
   } = props;
-  // state = {
-  //   view: [],
-  //   editingId: null,
-  //   editText: "",
-  // };
+
+  const {theme} = useContext(ThemeContext);
 
   useEffect(() => {
     setView(list.slice(0, 5 * pgIndex - 1));
@@ -41,16 +38,7 @@ export default function View(props) {
   //   }
   // }
 
-  // const {
-  //   onClear,
-  //   onFilter,
-  //   scrollRef,
-  //   onScroll,
-  //   onChange,
-  //   handleEdit,
-  //   onDelete,
-  // } = this.props;
-  // const { theme } = this.context;
+
   return (
     <div
       className="view"
@@ -68,32 +56,32 @@ export default function View(props) {
           />
           <label
             className="todo-item-label"
-            /*style={{
+            style={{
                 textDecoration: item.checked ? "line-through" : "none",
                 color: theme.color,
-              }}*/
+              }}
           >
             {item.todo}
           </label>
           <button
             className="edit"
             onClick={() => handleEdit(item.id, item.todo)}
-            /*style={{
+            style={{
                 color: theme.color,
                 border: theme.border,
                 backgroundColor: theme.backgroundButton,
-              }}*/
+              }}
           >
             edit
           </button>
           <div className="erase">
             <button
               onClick={() => onDelete(item)}
-              /*style={{
+              style={{
                   color: theme.color,
                   border: theme.border,
                   backgroundColor: theme.backgroundButton,
-                }}*/
+                }}
             >
               X
             </button>
@@ -109,8 +97,3 @@ export default function View(props) {
   );
 }
 
-// View.contextType = ThemeContext;
-
-// const View = (props) => {
-//   const {list, filter, count} = props
-// }
