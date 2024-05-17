@@ -6,6 +6,8 @@ import View from "./View";
 import InputComponent from "./Input";
 import { produce } from "immer";
 import ThemeTogglerButton from "./theme-toggler-button";
+// import { useDispatch } from "react-redux";
+// import { addOrEdit } from "../redux/actions";
 export const FILTER_STATUS = {
   ALL: "all",
   ACTIVE: "active",
@@ -15,6 +17,8 @@ export const FILTER_STATUS = {
 const WorkspaceComponent = () => {
   const ScrollRef = useRef(null);
   const inputChildRef = useRef(null);
+  // const dispatch = useDispatch();
+
   // const theme = useContext(ThemeContext);
   // const [editItem, setEditItem] = useState({ editingID: null });
   // const [state, setState] = useState({
@@ -42,6 +46,18 @@ const WorkspaceComponent = () => {
     return true;
   });
 
+  // const handleAddorEdit = () => {
+  //   dispatch(
+  //     addOrEdit({
+  //       status: FILTER_STATUS.ALL,
+  //       list: [],
+  //       currentPage: 1,
+  //       view: [],
+  //       input: "",
+  //     })
+  //   );
+  // };
+
   const editRequest = (id, name) => {
     editingId.current = id;
     inputChildRef.current.focus();
@@ -50,7 +66,9 @@ const WorkspaceComponent = () => {
 
   const addOrEdit = (item) => {
     if (editingId.current) {
-      setList(list.map((i) => (i.id === editingId.current ? { ...i, todo: item } : i)));
+      setList(
+        list.map((i) => (i.id === editingId.current ? { ...i, todo: item } : i))
+      );
       editingId.current = null;
     } else {
       setList(
@@ -102,7 +120,7 @@ const WorkspaceComponent = () => {
 
   return (
     <>
-      <ThemeTogglerButton/>
+      <ThemeTogglerButton />
       <InputComponent
         onSubmit={addOrEdit}
         className="pleasetype"
