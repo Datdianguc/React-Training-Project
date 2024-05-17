@@ -6,8 +6,8 @@ import View from "./View";
 import InputComponent from "./Input";
 import { produce } from "immer";
 import ThemeTogglerButton from "./theme-toggler-button";
-// import { useDispatch } from "react-redux";
-// import { addOrEdit } from "../redux/actions";
+import { useDispatch } from "react-redux";
+
 export const FILTER_STATUS = {
   ALL: "all",
   ACTIVE: "active",
@@ -17,7 +17,7 @@ export const FILTER_STATUS = {
 const WorkspaceComponent = () => {
   const ScrollRef = useRef(null);
   const inputChildRef = useRef(null);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // const theme = useContext(ThemeContext);
   // const [editItem, setEditItem] = useState({ editingID: null });
