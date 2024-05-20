@@ -4,20 +4,22 @@ import "../totalcss/Workspace.css";
 import ToggleAll from "./ToggleAll";
 import View from "./View";
 import InputComponent from "./Input";
-import { produce } from "immer";
 import ThemeTogglerButton from "./theme-toggler-button";
-import { useDispatch } from "react-redux";
-
-export const FILTER_STATUS = {
-  ALL: "all",
-  ACTIVE: "active",
-  COMPLETED: "completed",
-};
+import { useDispatch, useSelector } from "react-redux";
+import {addOrEditTodo, clearCompleted, deleteTodo, filterTodo, toggleAll, toggleCheck} from "../redux/Action/listAction"
+// import { addOrEditTodo } from "../redux/Action/Add-or-edit-action";
+// import { clearCompleted } from "../redux/Action/Clear-completed-action";
+// import { deleteTodo} from "../redux/Action/Delete-action";
+// import { filterTodo } from "../redux/Action/Filter-action";
+// import {toggleAll} from "../redux/Action/Toggle-all-action";
+// import { toggleCheck } from "../redux/Action/Toggle-check";
+// import { FILTER_STATUS } from "../redux/Reducer/Main-reducer";
 
 const WorkspaceComponent = () => {
   const ScrollRef = useRef(null);
   const inputChildRef = useRef(null);
   const dispatch = useDispatch();
+  const { filter, list } = useSelector((state) => state);
 
   // const theme = useContext(ThemeContext);
   // const [editItem, setEditItem] = useState({ editingID: null });
@@ -29,9 +31,6 @@ const WorkspaceComponent = () => {
   //   currentPage: 1,
   //   recordsPerPage: 5,
   // });
-
-  const [filter, setFilter] = useState(FILTER_STATUS.ALL);
-  const [list, setList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   const editingId = useRef(null);
@@ -46,67 +45,35 @@ const WorkspaceComponent = () => {
     return true;
   });
 
-  // const handleAddorEdit = () => {
-  //   dispatch(
-  //     addOrEdit({
-  //       status: FILTER_STATUS.ALL,
-  //       list: [],
-  //       currentPage: 1,
-  //       view: [],
-  //       input: "",
-  //     })
-  //   );
-  // };
-
   const editRequest = (id, name) => {
     editingId.current = id;
     inputChildRef.current.focus();
     inputChildRef.current.value = name;
   };
 
-  const addOrEdit = (item) => {
-    if (editingId.current) {
-      setList(
-        list.map((i) => (i.id === editingId.current ? { ...i, todo: item } : i))
-      );
-      editingId.current = null;
-    } else {
-      setList(
-        produce((draftState) => {
-          const todo = { todo: item, checked: false, id: list.length + 1 };
-          draftState.push(todo);
-        })
-      );
-    }
+  const handleAddorEdit = (item) => {
+    dispatch(addOrEditTodo({ id: editingId.current, item }));
+    editingId.current = null;
   };
 
   const handleCheckboxChange = (id) => {
-    setList(
-      list.map((item) => {
-        return item.id === id ? { ...item, checked: !item.checked } : item;
-      })
-    );
+    dispatch(toggleCheck(id));
   };
 
   const handleDelete = (item) => {
-    setList(list.filter((i) => i.id !== item.id));
+    dispatch(deleteTodo(item));
   };
 
   const handleFilterChange = (filter) => {
-    setFilter(filter);
+    dispatch(filterTodo(filter));
   };
 
   const handleClearCompleted = () => {
-    setList(list.filter((item) => !item.checked));
+    dispatch(clearCompleted());
   };
 
   const handleToggleAll = () => {
-    const allChecked = list.every((item) => item.checked);
-    const updatedList = list.map((item) => ({
-      ...item,
-      checked: !allChecked,
-    }));
-    setList(updatedList);
+    dispatch(toggleAll());
   };
 
   const handleScroll = () => {
@@ -122,7 +89,7 @@ const WorkspaceComponent = () => {
     <>
       <ThemeTogglerButton />
       <InputComponent
-        onSubmit={addOrEdit}
+        onSubmit={handleAddorEdit}
         className="pleasetype"
         placeholder="What needs to be done?"
         inputRef={inputChildRef}

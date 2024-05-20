@@ -1,6 +1,7 @@
 import {createStore} from 'redux';
-import rootReducer from './Reducer/Main-reducer';
-
-const store = createStore(rootReducer);
+import todoReducer from './Reducer/Main-reducer';
+// createStore(reducer, initStore)
+const todolist = [];
+const store = createStore(todoReducer, todolist);
 
 export default store;
