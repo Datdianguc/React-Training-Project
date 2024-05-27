@@ -22,3 +22,5 @@ const categoryApi = {
     return axiosClient.delete(url);
   },
 };
+
+export default categoryApi;

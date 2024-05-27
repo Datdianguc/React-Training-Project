@@ -16,7 +16,7 @@ const todoReducer = (state = initState, action) => {
         if (id) {
           draft.list[id-1].todo = item;
         } else {
-          draft.list.push({
+          draft.list.unshift({
             id: draft.list.length + 1,
             todo: item,
             checked: false,

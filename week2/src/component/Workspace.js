@@ -15,16 +15,6 @@ const WorkspaceComponent = () => {
   const dispatch = useDispatch();
   const { filter, list } = useSelector((state) => state);
 
-  // const theme = useContext(ThemeContext);
-  // const [editItem, setEditItem] = useState({ editingID: null });
-  // const [state, setState] = useState({
-  //   count: 0,
-  //   text: "",
-  //   filter: FILTER_STATUS.ALL,
-  //   list: [],
-  //   currentPage: 1,
-  //   recordsPerPage: 5,
-  // });
   const [currentPage, setCurrentPage] = useState(1);
 
   const editingId = useRef(null);
