@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import Menu from "./Menu";
 import "../totalcss/View.css";
 import { ThemeContext } from "./ThemeProvider";
+import { useDispatch } from "react-redux";
+import action_type from "../redux/Action/ACTION_TYPE";
 export default function View(props) {
   const [view, setView] = useState([]);
   const {
@@ -10,14 +12,12 @@ export default function View(props) {
     pgIndex,
     scrollRef,
     onScroll,
-    onChange,
     handleEdit,
-    onDelete,
     onClear,
-    onFilter,
   } = props;
 
-  const {theme} = useContext(ThemeContext);
+  const dispatch = useDispatch();
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     setView(list.slice(0, 5 * pgIndex - 1));
@@ -38,7 +38,6 @@ export default function View(props) {
   //   }
   // }
 
-
   return (
     <div
       className="view"
@@ -52,14 +51,16 @@ export default function View(props) {
             className="toggle"
             type="checkbox"
             checked={item.checked}
-            onClick={() => onChange(item.id)}
+            onClick={() =>
+              dispatch({ type: action_type.TOGGLE_CHECK, payload: item.id})
+            }
           />
           <label
             className="todo-item-label"
             style={{
-                textDecoration: item.checked ? "line-through" : "none",
-                color: theme.color,
-              }}
+              textDecoration: item.checked ? "line-through" : "none",
+              color: theme.color,
+            }}
           >
             {item.todo}
           </label>
@@ -67,21 +68,23 @@ export default function View(props) {
             className="edit"
             onClick={() => handleEdit(item.id, item.todo)}
             style={{
-                color: theme.color,
-                border: theme.border,
-                backgroundColor: theme.backgroundButton,
-              }}
+              color: theme.color,
+              border: theme.border,
+              backgroundColor: theme.backgroundButton,
+            }}
           >
             edit
           </button>
           <div className="erase">
             <button
-              onClick={() => onDelete(item)}
+              onClick={() =>
+                dispatch({ type: action_type.DELETE_TODO, payload: {id: item.id}})
+              }
               style={{
-                  color: theme.color,
-                  border: theme.border,
-                  backgroundColor: theme.backgroundButton,
-                }}
+                color: theme.color,
+                border: theme.border,
+                backgroundColor: theme.backgroundButton,
+              }}
             >
               X
             </button>
@@ -89,11 +92,10 @@ export default function View(props) {
         </div>
       ))}
       {list.length > 0 ? (
-        <Menu count={count} onClear={onClear} onFilter={onFilter} />
+        <Menu count={count} onClear={onClear} />
       ) : (
         ""
       )}
     </div>
   );
 }
-

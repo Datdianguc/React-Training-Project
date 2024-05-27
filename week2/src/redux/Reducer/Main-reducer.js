@@ -5,6 +5,7 @@ import FILTER_STATUS from '../Action/FILTER_STATUS'
 const initState = {
   filter: FILTER_STATUS.ALL,
   list: [],
+  checked: false,
 };
 
 const todoReducer = (state = initState, action) => {
@@ -29,11 +30,7 @@ const todoReducer = (state = initState, action) => {
       };
     case action_type.TOGGLE_CHECK:
       return produce(state, (draft) => {
-        const {id} = action.payload;
-        const CheckIndex = draft.list.findIndex((i) => i.id !== id);
-        if (CheckIndex !== 1) {
-          draft.list[CheckIndex].checked = !draft.list[CheckIndex].checked;
-        }
+        draft.list[action.payload-1].checked = !draft.list[action.payload-1].checked;
       });
     case action_type.DELETE_TODO:
       return produce(state, (draft) => {

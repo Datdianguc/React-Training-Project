@@ -6,15 +6,8 @@ import View from "./View";
 import InputComponent from "./Input";
 import ThemeTogglerButton from "./theme-toggler-button";
 import { useDispatch, useSelector } from "react-redux";
-import {addOrEditTodo, clearCompleted, deleteTodo, filterTodo, toggleAll, toggleCheck} from "../redux/Action/listAction"
+import {addOrEditTodo} from "../redux/Action/listAction"
 import FILTER_STATUS from "../redux/Action/FILTER_STATUS";
-// import { addOrEditTodo } from "../redux/Action/Add-or-edit-action";
-// import { clearCompleted } from "../redux/Action/Clear-completed-action";
-// import { deleteTodo} from "../redux/Action/Delete-action";
-// import { filterTodo } from "../redux/Action/Filter-action";
-// import {toggleAll} from "../redux/Action/Toggle-all-action";
-// import { toggleCheck } from "../redux/Action/Toggle-check";
-// import { FILTER_STATUS } from "../redux/Reducer/Main-reducer";
 
 const WorkspaceComponent = () => {
   const ScrollRef = useRef(null);
@@ -57,26 +50,6 @@ const WorkspaceComponent = () => {
     editingId.current = null;
   };
 
-  const handleCheckboxChange = (id) => {
-    dispatch(toggleCheck(id));
-  };
-
-  const handleDelete = (id) => {
-    dispatch(deleteTodo(id));
-  };
-
-  const handleFilterChange = (filter) => {
-    dispatch(filterTodo(filter));
-  };
-
-  const handleClearCompleted = () => {
-    dispatch(clearCompleted());
-  };
-
-  const handleToggleAll = () => {
-    dispatch(toggleAll());
-  };
-
   const handleScroll = () => {
     if (
       ScrollRef.current.scrollTop ===
@@ -96,16 +69,12 @@ const WorkspaceComponent = () => {
         inputRef={inputChildRef}
       />
       <div className="toggle-all-container">
-        <ToggleAll name="^" onClick={handleToggleAll} />
+        <ToggleAll name="^" />
       </div>
       <View
         list={filteredList}
         filter={filter}
         count={count}
-        onChange={handleCheckboxChange}
-        onDelete={handleDelete}
-        onClear={handleClearCompleted}
-        onFilter={handleFilterChange}
         pgIndex={currentPage}
         handleEdit={editRequest}
         onScroll={handleScroll}
