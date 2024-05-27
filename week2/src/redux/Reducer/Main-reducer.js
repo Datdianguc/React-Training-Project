@@ -1,20 +1,6 @@
 import produce from "immer";
 import action_type from '../Action/ACTION_TYPE'
 import FILTER_STATUS from '../Action/FILTER_STATUS'
-// export const FILTER_STATUS = {
-//   ALL: "all",
-//   ACTIVE: "active",
-//   COMPLETED: "completed",
-// };
-
-// export const action_type = {
-//   ADD_OR_EDIT_TODO: "addOrEditTodo",
-//   TOGGLE_CHECK: "toggleCheck",
-//   DELETE_TODO: "deleteTodo",
-//   FILTER_TODO: "filterTodo",
-//   CLEAR_COMPLETED: "clearCompleted",
-//   TOGGLE_ALL: "toggleAll",
-// };
 
 const initState = {
   filter: FILTER_STATUS.ALL,
@@ -27,10 +13,7 @@ const todoReducer = (state = initState, action) => {
       return produce(state, (draft) => {
         const {id, item} = action.payload;
         if (id) {
-          const index = draft.list.findIndex((i) => i.id !== id);
-          if (index !== -1) {
-            draft.list[index].todo = item;
-          }
+          draft.list[id-1].todo = item;
         } else {
           draft.list.push({
             id: draft.list.length + 1,
@@ -54,8 +37,8 @@ const todoReducer = (state = initState, action) => {
       });
     case action_type.DELETE_TODO:
       return produce(state, (draft) => {
-        const {item} = action.payload;
-        draft.list = draft.list.filter((i) => i.id !== item.id);
+        const {id} = action.payload;
+        draft.list = draft.list.filter((i) => i.id !== id);
       });
     case action_type.CLEAR_COMPLETED:
       return produce(state, (draft) => {

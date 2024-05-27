@@ -7,6 +7,7 @@ import InputComponent from "./Input";
 import ThemeTogglerButton from "./theme-toggler-button";
 import { useDispatch, useSelector } from "react-redux";
 import {addOrEditTodo, clearCompleted, deleteTodo, filterTodo, toggleAll, toggleCheck} from "../redux/Action/listAction"
+import FILTER_STATUS from "../redux/Action/FILTER_STATUS";
 // import { addOrEditTodo } from "../redux/Action/Add-or-edit-action";
 // import { clearCompleted } from "../redux/Action/Clear-completed-action";
 // import { deleteTodo} from "../redux/Action/Delete-action";
@@ -60,8 +61,8 @@ const WorkspaceComponent = () => {
     dispatch(toggleCheck(id));
   };
 
-  const handleDelete = (item) => {
-    dispatch(deleteTodo(item));
+  const handleDelete = (id) => {
+    dispatch(deleteTodo(id));
   };
 
   const handleFilterChange = (filter) => {

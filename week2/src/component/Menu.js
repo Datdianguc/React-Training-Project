@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import FilterButton from "./filterbutton";
 import "../totalcss/Menu.css";
-import { FILTER_STATUS } from "../redux/Reducer/Main-reducer";
+// import { FILTER_STATUS } from "../redux/Reducer/Main-reducer";
+import FILTER_STATUS from "../redux/Action/FILTER_STATUS";
 import { ThemeContext } from "./ThemeProvider";
 export default function Menu(props) {
     const { onFilter, count, onClear } = props;
