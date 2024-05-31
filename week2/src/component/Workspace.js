@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../totalcss/Workspace.css";
 // import Pagination from "./Pagination";
 import ToggleAll from "./ToggleAll";
@@ -6,8 +6,9 @@ import View from "./View";
 import InputComponent from "./Input";
 import ThemeTogglerButton from "./theme-toggler-button";
 import { useDispatch, useSelector } from "react-redux";
-import {addOrEditTodo} from "../redux/Action/listAction"
+import { addOrEditTodo, loadTodo } from "../redux/Action/listAction";
 import FILTER_STATUS from "../redux/Action/FILTER_STATUS";
+import axios from "axios";
 
 const WorkspaceComponent = () => {
   const ScrollRef = useRef(null);
@@ -29,6 +30,18 @@ const WorkspaceComponent = () => {
     return true;
   });
 
+  useEffect(() => {
+    axios
+      .get("https://66546e601c6af63f4677e5a6.mockapi.io/todostorage")
+      .then((response) => {
+        dispatch(loadTodo(response.data));
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const editRequest = (id, name) => {
     editingId.current = id;
     inputChildRef.current.focus();
@@ -36,7 +49,19 @@ const WorkspaceComponent = () => {
   };
 
   const handleAddorEdit = (item) => {
-    dispatch(addOrEditTodo({ id: editingId.current, item }));
+    dispatch(addOrEditTodo(item));
+    axios
+      .post("https://66546e601c6af63f4677e5a6.mockapi.io/todostorage", {
+        id: list.length + 1,
+        todo: item,
+        checked: false,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     editingId.current = null;
   };
 

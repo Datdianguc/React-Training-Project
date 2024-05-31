@@ -4,17 +4,12 @@ import "../totalcss/View.css";
 import { ThemeContext } from "./ThemeProvider";
 import { useDispatch } from "react-redux";
 import action_type from "../redux/Action/ACTION_TYPE";
+import axios from "axios";
+import { deleteTodo } from "../redux/Action/listAction";
 export default function View(props) {
   const [view, setView] = useState([]);
-  const {
-    count,
-    list,
-    pgIndex,
-    scrollRef,
-    onScroll,
-    handleEdit,
-    onClear,
-  } = props;
+  const { count, list, pgIndex, scrollRef, onScroll, handleEdit, onClear } =
+    props;
 
   const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
@@ -52,7 +47,7 @@ export default function View(props) {
             type="checkbox"
             checked={item.checked}
             onClick={() =>
-              dispatch({ type: action_type.TOGGLE_CHECK, payload: item.id})
+              dispatch({ type: action_type.TOGGLE_CHECK, payload: item.id })
             }
           />
           <label
@@ -78,7 +73,18 @@ export default function View(props) {
           <div className="erase">
             <button
               onClick={() =>
-                dispatch({ type: action_type.DELETE_TODO, payload: {id: item.id}})
+                // dispatch({ type: action_type.DELETE_TODO, payload: {id: item.id}})
+                axios
+                  .delete(
+                    `https://66546e601c6af63f4677e5a6.mockapi.io/todostorage/${item.id}`
+                  )
+                  .then((response) => {
+                    dispatch(deleteTodo(item.id));
+                    console.log(response);
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  })
               }
               style={{
                 color: theme.color,
@@ -91,11 +97,7 @@ export default function View(props) {
           </div>
         </div>
       ))}
-      {list.length > 0 ? (
-        <Menu count={count} onClear={onClear} />
-      ) : (
-        ""
-      )}
+      {list.length > 0 ? <Menu count={count} onClear={onClear} /> : ""}
     </div>
   );
 }

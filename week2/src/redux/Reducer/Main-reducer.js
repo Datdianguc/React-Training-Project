@@ -2,6 +2,7 @@ import produce from "immer";
 import action_type from '../Action/ACTION_TYPE'
 import FILTER_STATUS from '../Action/FILTER_STATUS'
 
+
 const initState = {
   filter: FILTER_STATUS.ALL,
   list: [],
@@ -10,13 +11,18 @@ const initState = {
 
 const todoReducer = (state = initState, action) => {
   switch (action.type) {
+    case action_type.LOAD_TODO:
+      return{
+        ...state,
+        list: [...state.list, ...action.payload]
+      }
     case action_type.ADD_OR_EDIT_TODO:
       return produce(state, (draft) => {
         const {id, item} = action.payload;
         if (id) {
           draft.list[id-1].todo = item;
         } else {
-          draft.list.unshift({
+          draft.list.push({
             id: draft.list.length + 1,
             todo: item,
             checked: false,

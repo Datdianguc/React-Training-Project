@@ -28,14 +28,21 @@ export const filterTodo = (filter) => {
 };
 
 export const toggleAll = () => {
-    return {
-      type: action_type.TOGGLE_ALL,  
-    };
+  return {
+    type: action_type.TOGGLE_ALL,
+  };
 };
 
 export const toggleCheck = (id) => {
-    return {
-      type: action_type.TOGGLE_CHECK,
-      payload: id,  
-    };
+  return {
+    type: action_type.TOGGLE_CHECK,
+    payload: id,
+  };
+};
+
+export const loadTodo = (data) => {
+  return {
+    type: action_type.LOAD_TODO,
+    payload: data,
+  };
 };
