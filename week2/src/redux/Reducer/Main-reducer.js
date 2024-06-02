@@ -2,21 +2,28 @@ import produce from "immer";
 import action_type from '../Action/ACTION_TYPE'
 import FILTER_STATUS from '../Action/FILTER_STATUS'
 
-
 const initState = {
   filter: FILTER_STATUS.ALL,
   list: [],
   checked: false,
+  loading: true,
+  error: null,
 };
 
 const todoReducer = (state = initState, action) => {
   switch (action.type) {
+    case action_type.DELETE_TODO_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      }
     case action_type.LOAD_TODO:
       return{
         ...state,
         list: [...state.list, ...action.payload]
       }
-    case action_type.ADD_OR_EDIT_TODO:
+    case action_type.ADD_OR_EDIT_TODO_SUCCESS:
       return produce(state, (draft) => {
         const {id, item} = action.payload;
         if (id) {
@@ -28,6 +35,8 @@ const todoReducer = (state = initState, action) => {
             checked: false,
           });
         }
+        draft.loading = false;
+        draft.error = null;
       });
     case action_type.FILTER_TODO:
       return {
@@ -38,11 +47,19 @@ const todoReducer = (state = initState, action) => {
       return produce(state, (draft) => {
         draft.list[action.payload-1].checked = !draft.list[action.payload-1].checked;
       });
-    case action_type.DELETE_TODO:
+    case action_type.DELETE_TODO_SUCCESS:
       return produce(state, (draft) => {
         const {id} = action.payload;
         draft.list = draft.list.filter((i) => i.id !== id);
+        draft.loading = false;
+        draft.error = null;
       });
+    case action_type.DELETE_TODO_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
     case action_type.CLEAR_COMPLETED:
       return produce(state, (draft) => {
         draft.list = draft.list.filter((item) => !item.checked);

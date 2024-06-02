@@ -6,7 +6,7 @@ import View from "./View";
 import InputComponent from "./Input";
 import ThemeTogglerButton from "./theme-toggler-button";
 import { useDispatch, useSelector } from "react-redux";
-import { addOrEditTodo, loadTodo } from "../redux/Action/listAction";
+import { addOrEditTodoSuccess, loadTodo } from "../redux/Action/listAction";
 import FILTER_STATUS from "../redux/Action/FILTER_STATUS";
 import axios from "axios";
 
@@ -49,7 +49,7 @@ const WorkspaceComponent = () => {
   };
 
   const handleAddorEdit = (item) => {
-    dispatch(addOrEditTodo(item));
+    dispatch(addOrEditTodoSuccess(item));
     axios
       .post("https://66546e601c6af63f4677e5a6.mockapi.io/todostorage", {
         id: list.length + 1,
@@ -57,6 +57,7 @@ const WorkspaceComponent = () => {
         checked: false,
       })
       .then((response) => {
+        dispatch(addOrEditTodoSuccess(item));
         console.log(response);
       })
       .catch((error) => {
@@ -64,6 +65,7 @@ const WorkspaceComponent = () => {
       });
     editingId.current = null;
   };
+  
 
   const handleScroll = () => {
     if (

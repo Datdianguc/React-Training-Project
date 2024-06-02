@@ -40,15 +40,13 @@ export default function View(props) {
       onScroll={onScroll}
       style={{ height: 300, overflow: "auto" }}
     >
-      {view.map((item) => (
-        <div className="ul-todo-list" key={item.id}>
+      {view.map((item, index) => (
+        <div className="ul-todo-list" key={`${item.id}-${index}`}>
           <input
             className="toggle"
             type="checkbox"
             checked={item.checked}
-            onClick={() =>
-              dispatch({ type: action_type.TOGGLE_CHECK, payload: item.id })
-            }
+            onChange={() => dispatch({type: action_type.TOGGLE_CHECK, payload: item.id})}
           />
           <label
             className="todo-item-label"
@@ -72,8 +70,8 @@ export default function View(props) {
           </button>
           <div className="erase">
             <button
-              onClick={() =>
-                // dispatch({ type: action_type.DELETE_TODO, payload: {id: item.id}})
+              onClick={() => {
+                dispatch(deleteTodo(item.id));
                 axios
                   .delete(
                     `https://66546e601c6af63f4677e5a6.mockapi.io/todostorage/${item.id}`
@@ -84,8 +82,8 @@ export default function View(props) {
                   })
                   .catch((error) => {
                     console.log(error);
-                  })
-              }
+                  });
+              }}
               style={{
                 color: theme.color,
                 border: theme.border,

@@ -1,8 +1,8 @@
 import action_type from "./ACTION_TYPE";
 
-export const addOrEditTodo = (item) => {
+export const addOrEditTodoSuccess = (item) => {
   return {
-    type: action_type.ADD_OR_EDIT_TODO,
+    type: action_type.ADD_OR_EDIT_TODO_SUCCESS,
     payload: item,
   };
 };
@@ -15,7 +15,7 @@ export const clearCompleted = () => {
 
 export const deleteTodo = (id) => {
   return {
-    type: action_type.DELETE_TODO,
+    type: action_type.DELETE_TODO_SUCCESS,
     payload: id,
   };
 };
