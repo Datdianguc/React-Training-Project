@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import "../totalcss/Input.css";
 import { ThemeContext } from "./ThemeProvider";
 export default function InputComponent(props) {
-  const { onSubmit, className, placeholder, editItem, inputRef } = props;
+  const { onSubmit, className, placeholder, inputRef } = props;
 
   const {theme} = useContext(ThemeContext);
 
@@ -27,7 +27,6 @@ export default function InputComponent(props) {
             placeholder={placeholder}
             onChange={handleChange}
             ref={inputRef}
-            editItem={editItem}
             style={{ color: theme.color }}
           />
         </form>
