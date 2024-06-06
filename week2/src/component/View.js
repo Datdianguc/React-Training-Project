@@ -18,21 +18,6 @@ export default function View(props) {
     setView(list.slice(0, 5 * pgIndex - 1));
   }, [list, pgIndex]);
 
-  // componentDidUpdate(prevProps) {
-  //   if (
-  //     list !== prevProps.list ||
-  //     pgIndex !== prevProps.pgIndex
-  //   ) {
-  //     setView(
-  //       list.slice(
-  //         // 5 * this.props.pgIndex - 5,
-  //         0,
-  //         5 * pgIndex
-  //       ),
-  //     );
-  //   }
-  // }
-
   return (
     <div
       className="view"
@@ -46,7 +31,9 @@ export default function View(props) {
             className="toggle"
             type="checkbox"
             checked={item.checked}
-            onChange={() => dispatch({type: action_type.TOGGLE_CHECK, payload: item.id})}
+            onChange={() =>
+              dispatch({ type: action_type.TOGGLE_CHECK, payload: item.id })
+            }
           />
           <label
             className="todo-item-label"

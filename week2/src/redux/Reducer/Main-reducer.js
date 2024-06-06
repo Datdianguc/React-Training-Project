@@ -19,10 +19,14 @@ const todoReducer = (state = initState, action) => {
         error: null,
       }
     case action_type.LOAD_TODO:
-      return{
+      return {
         ...state,
-        list: [...state.list, ...action.payload]
-      }
+        list: action.payload.map(item => ({ ...item, checked: item.checked || false })),
+      };
+      // return{
+      //   ...state,
+      //   list: [...state.list, ...action.payload]
+      // }
     case action_type.ADD_OR_EDIT_TODO_SUCCESS:
       return produce(state, (draft) => {
         const {id, item} = action.payload;
@@ -45,7 +49,10 @@ const todoReducer = (state = initState, action) => {
       };
     case action_type.TOGGLE_CHECK:
       return produce(state, (draft) => {
-        draft.list[action.payload-1].checked = !draft.list[action.payload-1].checked;
+        const index = draft.list.findIndex(i => i.id === action.payload);
+        if (index !== -1) {
+          draft.list[index].checked = !draft.list[index].checked;
+        }
       });
     case action_type.DELETE_TODO_SUCCESS:
       return produce(state, (draft) => {
