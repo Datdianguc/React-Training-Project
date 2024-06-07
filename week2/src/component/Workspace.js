@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../totalcss/Workspace.css";
-// import Pagination from "./Pagination";
 import ToggleAll from "./ToggleAll";
 import View from "./View";
 import InputComponent from "./Input";
 import ThemeTogglerButton from "./theme-toggler-button";
 import { useDispatch, useSelector } from "react-redux";
-import { addOrEditTodoSuccess, loadTodo } from "../redux/Action/listAction";
+import { addTodoRequest, loadTodo } from "../redux/Action/listAction";
+import { addTodoSaga } from "../redux/redux-saga/saga";
 import FILTER_STATUS from "../redux/Action/FILTER_STATUS";
 import axios from "axios";
 
@@ -51,10 +51,10 @@ const WorkspaceComponent = () => {
   const handleAddorEdit = (item) => {
     if (editingId.current) {
       const editedItem = { id: editingId.current, todo: item, checked: false };
-      dispatch(addOrEditTodoSuccess(editedItem));
+      dispatch(addTodoSaga(editedItem));
       editingId.current = null;
     } else {
-      dispatch(addOrEditTodoSuccess(item));
+      dispatch(addTodoRequest(item));
     }
     inputChildRef.current.value = "";
     // dispatch(addOrEditTodoSuccess(item));

@@ -59,3 +59,13 @@ export const loadTodo = (data) => {
     payload: data,
   };
 };
+
+export const addTodoRequest = (todo) => ({
+  type: action_type.ADD_OR_EDIT_TODO_REQUEST,
+  payload: todo,
+})
+
+export const deleteTodoRequest = (id) => ({
+  type: action_type.DELETE_TODO_REQUEST,
+  payload: id,
+})
