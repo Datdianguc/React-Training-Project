@@ -13,7 +13,7 @@ const WorkspaceComponent = () => {
   const ScrollRef = useRef(null);
   const inputChildRef = useRef(null);
   const dispatch = useDispatch();
-  const { filter, list } = useSelector((state) => state);
+  const { filter, list } = useSelector((state) => state.todoReducer);
 
   const [currentPage, setCurrentPage] = useState(1);
 
