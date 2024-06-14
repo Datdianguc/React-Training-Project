@@ -22,11 +22,9 @@ const todoReducer = (state = initState, action) => {
       return {
         ...state,
         list: action.payload.map(item => ({ ...item, checked: item.checked || false })),
+        loading: false,
+        error: null
       };
-      // return{
-      //   ...state,
-      //   list: [...state.list, ...action.payload]
-      // }
     case action_type.ADD_OR_EDIT_TODO_SUCCESS:
       return produce(state, (draft) => {
         const {id, item} = action.payload;

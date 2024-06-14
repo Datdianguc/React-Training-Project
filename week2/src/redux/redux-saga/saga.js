@@ -1,10 +1,6 @@
 import action_type from "../Action/ACTION_TYPE";
 import axios from "axios";
-import { call, put, takeLatest, takeEvery, all } from "redux-saga/effects";
-
-export function* helloSaga() {
-  console.log("Hello Sagas!");
-}
+import { call, put, takeLatest, all } from "redux-saga/effects";
 
 export function* fetchTodo() {
   try {
@@ -37,7 +33,7 @@ export function* addTodoSaga(action) {
   }
 }
 
-export function* deleteTodoSaga(action) {
+function* deleteTodoSaga(action) {
   try {
     yield call(
       axios.delete,
@@ -45,9 +41,13 @@ export function* deleteTodoSaga(action) {
     );
     yield put({
       type: action_type.DELETE_TODO_SUCCESS,
-      payload: action.payload,
+      payload: { id: action.payload },
     });
   } catch (error) {
+    yield put({
+      type: action_type.DELETE_TODO_FAILURE,
+      payload: { error: error.message },
+    });
     console.error("Error deleting todo:", error);
   }
 }
@@ -66,7 +66,6 @@ export function* watchDeleteTodo() {
 
 export default function* rootSaga() {
   yield all([
-    helloSaga(),
     watchFetchTodos(),
     watchAddTodo(),
     watchDeleteTodo(),

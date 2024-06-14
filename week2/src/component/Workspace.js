@@ -5,10 +5,9 @@ import View from "./View";
 import InputComponent from "./Input";
 import ThemeTogglerButton from "./theme-toggler-button";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodoRequest, loadTodo } from "../redux/Action/listAction";
+import { addTodoRequest, loadTodoRequest } from "../redux/Action/listAction";
 import { addTodoSaga } from "../redux/redux-saga/saga";
 import FILTER_STATUS from "../redux/Action/FILTER_STATUS";
-import axios from "axios";
 
 const WorkspaceComponent = () => {
   const ScrollRef = useRef(null);
