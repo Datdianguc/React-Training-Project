@@ -26,7 +26,7 @@ export function* addTodoSaga(action) {
     );
     yield put({
       type: action_type.ADD_OR_EDIT_TODO_SUCCESS,
-      payload: response.data,
+      payload: response.data, // lien ket giua wscp voi main reducer
     });
   } catch (error) {
     console.log("Error adding todo", error);
