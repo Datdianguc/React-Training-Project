@@ -31,15 +31,7 @@ const WorkspaceComponent = () => {
   });
 
   useEffect(() => {
-    axios
-      .get("https://66546e601c6af63f4677e5a6.mockapi.io/todostorage")
-      .then((response) => {
-        dispatch(loadTodo(response.data));
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(loadTodoRequest());
   }, [dispatch]);
 
   const editRequest = (id, name) => {

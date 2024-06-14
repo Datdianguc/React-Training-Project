@@ -1,6 +1,6 @@
 import action_type from "../Action/ACTION_TYPE";
 import axios from "axios";
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest, takeEvery, all } from "redux-saga/effects";
 
 export function* helloSaga() {
   console.log("Hello Sagas!");
@@ -52,10 +52,23 @@ export function* deleteTodoSaga(action) {
   }
 }
 
-export function* mySaga() {
-    yield takeLatest(action_type.LOAD_TODO_REQUEST, fetchTodo);
-    yield takeLatest(action_type.ADD_TODO_REQUEST, addTodoSaga);
-    yield takeLatest(action_type.DELETE_TODO_REQUEST, deleteTodoSaga);
-  }
-  
+export function* watchFetchTodos() {
+  yield takeLatest(action_type.LOAD_TODO_REQUEST, fetchTodo);
+}
 
+export function* watchAddTodo() {
+  yield takeLatest(action_type.ADD_TODO_REQUEST, addTodoSaga);
+}
+
+export function* watchDeleteTodo() {
+  yield takeLatest(action_type.DELETE_TODO_REQUEST, deleteTodoSaga);
+}
+
+export default function* rootSaga() {
+  yield all([
+    helloSaga(),
+    watchFetchTodos(),
+    watchAddTodo(),
+    watchDeleteTodo(),
+  ]);
+}

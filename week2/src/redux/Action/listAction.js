@@ -60,6 +60,10 @@ export const loadTodo = (data) => {
   };
 };
 
+export const loadTodoRequest = () => ({
+  type: action_type.LOAD_TODO_REQUEST
+})
+
 export const addTodoRequest = (todo) => ({
   type: action_type.ADD_OR_EDIT_TODO_REQUEST,
   payload: todo,

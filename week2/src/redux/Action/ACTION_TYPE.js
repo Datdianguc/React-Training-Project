@@ -10,5 +10,6 @@ const action_type = {
   CLEAR_COMPLETED: "clearCompleted",
   TOGGLE_ALL: "toggleAll",
   LOAD_TODO: "loadTodo",
+  LOAD_TODO_REQUEST: "loadTodoRequest"
 };
 export default action_type;
