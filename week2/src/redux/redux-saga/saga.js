@@ -57,7 +57,7 @@ export function* watchFetchTodos() {
 }
 
 export function* watchAddTodo() {
-  yield takeLatest(action_type.ADD_TODO_REQUEST, addTodoSaga);
+  yield takeLatest(action_type.ADD_OR_EDIT_TODO_REQUEST, addTodoSaga);
 }
 
 export function* watchDeleteTodo() {

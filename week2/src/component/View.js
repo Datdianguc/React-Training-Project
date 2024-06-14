@@ -5,7 +5,7 @@ import { ThemeContext } from "./ThemeProvider";
 import { useDispatch } from "react-redux";
 import action_type from "../redux/Action/ACTION_TYPE";
 import axios from "axios";
-import { deleteTodo } from "../redux/Action/listAction";
+import { deleteTodoSuccess } from "../redux/Action/listAction";
 export default function View(props) {
   const [view, setView] = useState([]);
   const { count, list, pgIndex, scrollRef, onScroll, handleEdit, onClear } =
@@ -58,13 +58,13 @@ export default function View(props) {
           <div className="erase">
             <button
               onClick={() => {
-                dispatch(deleteTodo(item.id));
+                dispatch(deleteTodoSuccess(item.id));
                 axios
                   .delete(
                     `https://66546e601c6af63f4677e5a6.mockapi.io/todostorage/${item.id}`
                   )
                   .then((response) => {
-                    dispatch(deleteTodo(item.id));
+                    dispatch(deleteTodoSuccess(item.id));
                     console.log(response);
                   })
                   .catch((error) => {

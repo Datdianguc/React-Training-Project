@@ -48,21 +48,6 @@ const WorkspaceComponent = () => {
       dispatch(addTodoRequest(item));
     }
     inputChildRef.current.value = "";
-    // dispatch(addOrEditTodoSuccess(item));
-    // axios
-    //   .post("https://66546e601c6af63f4677e5a6.mockapi.io/todostorage", {
-    //     id: list.length + 1,
-    //     todo: item,
-    //     checked: false,
-    //   })
-    //   .then((response) => {
-    //     dispatch(addOrEditTodoSuccess(item));
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-    // editingId.current = null;
   };
 
   const handleScroll = () => {

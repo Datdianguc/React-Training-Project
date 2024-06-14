@@ -22,18 +22,19 @@ const todoReducer = (state = initState, action) => {
       return {
         ...state,
         list: action.payload.map(item => ({ ...item, checked: item.checked || false })),
-        loading: false,
-        error: null
       };
     case action_type.ADD_OR_EDIT_TODO_SUCCESS:
       return produce(state, (draft) => {
-        const {id, item} = action.payload;
+        const {id, todo} = action.payload;
         if (id) {
-          draft.list[id-1].todo = item;
+          const itemIndex = draft.list.findIndex(item => item.id === id);
+          if (itemIndex !== -1) {
+            draft.list[itemIndex].todo = todo;
+          }
         } else {
           draft.list.push({
             id: draft.list.length + 1,
-            todo: item,
+            todo: todo,
             checked: false,
           });
         }
