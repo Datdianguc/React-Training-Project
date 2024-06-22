@@ -8,7 +8,7 @@ export function* fetchTodo() {
       axios.get,
       "https://66546e601c6af63f4677e5a6.mockapi.io/todostorage"
     );
-    yield put({ type: action_type.LOAD_TODO, payload: response.data });
+    yield put({ type: action_type.LOAD_TODO_SUCCESS, payload: response.data });
   } catch (error) {
     console.log("Error loading todo", error);
   }
@@ -26,7 +26,7 @@ export function* addTodoSaga(action) {
       }
     );
     yield put({
-      type: action_type.ADD_OR_EDIT_TODO_SUCCESS,
+      type: action_type.ADD_TODO_SUCCESS,
       payload: response.data, // lien ket giua wscp voi main reducer
     });
   } catch (error) {
@@ -53,22 +53,42 @@ function* deleteTodoSaga(action) {
   }
 }
 
+function* editTodoSaga(action) {
+  try {
+    const { id, todo } = action.payload;
+    console.log('Editing todo:', action.payload);
+    const response = yield call(axios.put, `https://66546e601c6af63f4677e5a6.mockapi.io/todostorage/${id}`, {
+      todo,
+      checked: false, 
+    });
+    yield put({ type: action_type.EDIT_TODO_SUCCESS, payload: response.data });
+  } catch (error) {
+    console.log('Error editing todo', error);
+  }
+}
+
 export function* watchFetchTodos() {
   yield takeLatest(action_type.LOAD_TODO_REQUEST, fetchTodo);
 }
 
 export function* watchAddTodo() {
-  yield takeLatest(action_type.ADD_OR_EDIT_TODO_REQUEST, addTodoSaga);
+  yield takeLatest(action_type.ADD_TODO_REQUEST, addTodoSaga);
 }
 
 export function* watchDeleteTodo() {
   yield takeLatest(action_type.DELETE_TODO_REQUEST, deleteTodoSaga);
 }
 
+function* watchEditTodo() {
+  yield takeLatest(action_type.EDIT_TODO_REQUEST, editTodoSaga);
+}
+
+
 export default function* rootSaga() {
   yield all([
     watchFetchTodos(),
     watchAddTodo(),
     watchDeleteTodo(),
+    watchEditTodo(),
   ]);
 }

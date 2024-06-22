@@ -5,7 +5,7 @@ import View from "./View";
 import InputComponent from "./Input";
 import ThemeTogglerButton from "./theme-toggler-button";
 import { useDispatch, useSelector } from "react-redux";
-import { addOrEditTodoSuccess, addTodoRequest, loadTodoRequest } from "../redux/Action/listAction";
+import { addTodoRequest, editTodoRequest, loadTodoRequest } from "../redux/Action/listAction";
 import FILTER_STATUS from "../redux/Action/FILTER_STATUS";
 
 const WorkspaceComponent = () => {
@@ -40,13 +40,12 @@ const WorkspaceComponent = () => {
 
   const handleAddorEdit = (item) => {
     if (editingId.current) {
-      const editedItem = { id: editingId.current, todo: item, checked: false };
-      dispatch(addOrEditTodoSuccess(editedItem));
+      dispatch(editTodoRequest(editingId.current, item));
       editingId.current = null;
     } else {
       dispatch(addTodoRequest(item));
     }
-    inputChildRef.current.value = "";
+    inputChildRef.current.value = '';
   };
 
   const handleScroll = () => {

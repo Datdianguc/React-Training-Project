@@ -18,31 +18,33 @@ const todoReducer = (state = initState, action) => {
         loading: true,
         error: null,
       };
-    case action_type.LOAD_TODO:
-      return {
-        ...state,
-        list: action.payload.map((item) => ({
-          ...item,
-          checked: item.checked || false,
-        })),
-      };
-    case action_type.ADD_OR_EDIT_TODO_REQUEST:
+    case action_type.LOAD_TODO_SUCCESS:
+      return produce(state, (draft) => {
+        draft.list = action.payload;
+        draft.loading = false;
+        draft.error = null;
+      });
+    case action_type.ADD_TODO_REQUEST:
       return produce(state, (draft) => {
         draft.loading = true;
         draft.error = null;
       });
-    case action_type.ADD_OR_EDIT_TODO_SUCCESS:
+    case action_type.ADD_TODO_SUCCESS:
       console.log('Todo added successfully:', action.payload);
       return produce(state, (draft) => {
-        // const { id, todo, checked } = action.payload;
-        // if (id) {
-        //   const itemIndex = draft.list.findIndex((item) => item.id === id);
-        //   if (itemIndex !== -1) {
-        //     draft.list[itemIndex].todo = {id, todo, checked};
-        //   }
-        // } else {
-          draft.list.push(action.payload);
-        // }
+        draft.list.push(action.payload);
+        draft.loading = false;
+        draft.error = null;
+      });
+    case action_type.EDIT_TODO_SUCCESS:
+      console.log('Todo edited successfully:', action.payload);
+      return produce(state, (draft) => {
+        const index = draft.list.findIndex(
+          (item) => item.id === action.payload.id
+        );
+        if (index !== -1) {
+          draft.list[index] = action.payload;
+        }
         draft.loading = false;
         draft.error = null;
       });

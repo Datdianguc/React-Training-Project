@@ -3,7 +3,9 @@ import "../totalcss/Input.css";
 import { ThemeContext } from "./ThemeProvider";
 export default function InputComponent(props) {
   const { onSubmit, className, placeholder, inputRef } = props;
+
   const {theme} = useContext(ThemeContext);
+
   const [input, setInput] = useState("");
 
   const handleChange = (event) => {
