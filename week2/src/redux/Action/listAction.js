@@ -1,8 +1,8 @@
 import action_type from "./ACTION_TYPE";
 
-export const addOrEditTodoSuccess = (item) => ({
+export const addOrEditTodoSuccess = (todo) => ({
   type: action_type.ADD_OR_EDIT_TODO_SUCCESS,
-  payload: item,
+  payload: todo,
 });
 
 export const clearCompleted = () => {
@@ -49,15 +49,15 @@ export const loadTodo = (data) => {
 };
 
 export const loadTodoRequest = () => ({
-  type: action_type.LOAD_TODO_REQUEST
-})
+  type: action_type.LOAD_TODO_REQUEST,
+});
 
 export const addTodoRequest = (todo) => ({
   type: action_type.ADD_OR_EDIT_TODO_REQUEST,
   payload: todo,
-})
+});
 
 export const deleteTodoRequest = (id) => ({
   type: action_type.DELETE_TODO_REQUEST,
   payload: id,
-})
+}); 

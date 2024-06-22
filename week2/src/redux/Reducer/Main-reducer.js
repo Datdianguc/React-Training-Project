@@ -1,6 +1,6 @@
 import produce from "immer";
-import action_type from '../Action/ACTION_TYPE'
-import FILTER_STATUS from '../Action/FILTER_STATUS'
+import action_type from "../Action/ACTION_TYPE";
+import FILTER_STATUS from "../Action/FILTER_STATUS";
 
 const initState = {
   filter: FILTER_STATUS.ALL,
@@ -17,17 +17,25 @@ const todoReducer = (state = initState, action) => {
         ...state,
         loading: true,
         error: null,
-      }
+      };
     case action_type.LOAD_TODO:
       return {
         ...state,
-        list: action.payload.map(item => ({ ...item, checked: item.checked || false })),
+        list: action.payload.map((item) => ({
+          ...item,
+          checked: item.checked || false,
+        })),
       };
+    case action_type.ADD_OR_EDIT_TODO_REQUEST:
+      return produce(state, (draft) => {
+        draft.loading = true;
+        draft.error = null;
+      });
     case action_type.ADD_OR_EDIT_TODO_SUCCESS:
       return produce(state, (draft) => {
-        const {id, todo} = action.payload;
+        const { id, todo } = action.payload;
         if (id) {
-          const itemIndex = draft.list.findIndex(item => item.id === id);
+          const itemIndex = draft.list.findIndex((item) => item.id === id);
           if (itemIndex !== -1) {
             draft.list[itemIndex].todo = todo;
           }
@@ -48,14 +56,14 @@ const todoReducer = (state = initState, action) => {
       };
     case action_type.TOGGLE_CHECK:
       return produce(state, (draft) => {
-        const index = draft.list.findIndex(i => i.id === action.payload);
+        const index = draft.list.findIndex((i) => i.id === action.payload);
         if (index !== -1) {
           draft.list[index].checked = !draft.list[index].checked;
         }
       });
     case action_type.DELETE_TODO_SUCCESS:
       return produce(state, (draft) => {
-        const {id} = action.payload;
+        const { id } = action.payload;
         draft.list = draft.list.filter((i) => i.id !== id);
         draft.loading = false;
         draft.error = null;
