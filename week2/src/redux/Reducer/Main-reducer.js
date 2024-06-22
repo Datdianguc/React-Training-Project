@@ -32,20 +32,17 @@ const todoReducer = (state = initState, action) => {
         draft.error = null;
       });
     case action_type.ADD_OR_EDIT_TODO_SUCCESS:
+      console.log('Todo added successfully:', action.payload);
       return produce(state, (draft) => {
-        const { id, todo } = action.payload;
-        if (id) {
-          const itemIndex = draft.list.findIndex((item) => item.id === id);
-          if (itemIndex !== -1) {
-            draft.list[itemIndex].todo = todo;
-          }
-        } else {
-          draft.list.push({
-            id: draft.list.length + 1,
-            todo: todo,
-            checked: false,
-          });
-        }
+        // const { id, todo, checked } = action.payload;
+        // if (id) {
+        //   const itemIndex = draft.list.findIndex((item) => item.id === id);
+        //   if (itemIndex !== -1) {
+        //     draft.list[itemIndex].todo = {id, todo, checked};
+        //   }
+        // } else {
+          draft.list.push(action.payload);
+        // }
         draft.loading = false;
         draft.error = null;
       });

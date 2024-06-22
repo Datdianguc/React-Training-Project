@@ -16,6 +16,7 @@ export function* fetchTodo() {
 
 export function* addTodoSaga(action) {
   try {
+    console.log('Adding todo:', action.payload);
     const response = yield call(
       axios.post,
       "https://66546e601c6af63f4677e5a6.mockapi.io/todostorage",
